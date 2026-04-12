@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/booking/booking",
+    "pages/activity/activity",
+    "pages/ticket/ticket",
+    "pages/mine/mine"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "学校抢票小程序",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#1E90FF",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/booking/booking",
+        "text": "抢票"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

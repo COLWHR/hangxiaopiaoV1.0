@@ -1,0 +1,52 @@
+<view class="container">
+  <view class="header">
+    <text class="title">活动抢票</text>
+  </view>
+
+  <view class="search-bar">
+    <view class="search-input">
+      <text class="search-icon">🔍</text>
+      <input placeholder="搜索活动" class="input"/>
+    </view>
+  </view>
+
+  <view class="filter-bar">
+    <view class="filter-item {{activeFilter === '全部' ? 'active' : ''}}" bindtap="onFilterTap" data-filter="全部">全部</view>
+    <view class="filter-item {{activeFilter === '抢票中' ? 'active' : ''}}" bindtap="onFilterTap" data-filter="抢票中">抢票中</view>
+    <view class="filter-item {{activeFilter === '已结束' ? 'active' : ''}}" bindtap="onFilterTap" data-filter="已结束">已结束</view>
+  </view>
+
+  <view class="activity-list">
+    <view wx:for="{{activities}}" wx:key="id" class="activity-card" bindtap="goToActivity" data-id="{{item.id}}">
+      <image src="{{item.image}}" mode="aspectFill" class="activity-image"></image>
+      <view class="activity-content">
+        <view class="activity-header">
+          <text class="activity-title">{{item.title}}</text>
+          <text class="status {{item.status}}">{{item.status === 'active' ? '抢票中' : '已结束'}}</text>
+        </view>
+        <view class="activity-info">
+          <view class="info-item">
+            <text class="info-label">时间：</text>
+            <text class="info-value">{{item.startTime}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">地点：</text>
+            <text class="info-value">{{item.location}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">剩余票数：</text>
+            <text class="info-value ticket-count">{{item.availableTickets}}</text>
+          </view>
+        </view>
+        <view class="activity-footer">
+          <button class="book-button" disabled="{{item.status !== 'active' || item.availableTickets <= 0}}">
+            {{item.status !== 'active' ? '已结束' : (item.availableTickets <= 0 ? '已售罄' : '立即抢票')}}
+          </button>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{activities.length === 0}}" class="empty">
+      <text>暂无活动</text>
+    </view>
+  </view>
+</view>
