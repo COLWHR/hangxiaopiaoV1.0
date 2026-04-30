@@ -1,11 +1,11 @@
 {
   "pages": [
+    "pages/register/register",
     "pages/index/index",
     "pages/booking/booking",
     "pages/activity/activity",
     "pages/ticket/ticket",
-    "pages/mine/mine",
-    "pages/admin/admin"
+    "pages/mine/mine"
   ],
   "window": {
     "backgroundTextStyle": "light",

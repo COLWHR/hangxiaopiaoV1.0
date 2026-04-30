@@ -1,78 +1,62 @@
-<view class="container">
-  <!-- 用户信息区域 -->
-  <view class="user-info">
+<view class="page">
+  <view class="profile-card">
     <image src="{{userInfo.avatarUrl}}" class="avatar"></image>
-    <view class="user-details">
-      <text class="user-name">{{userInfo.nickname}}</text>
-      <text class="user-student-id">{{userInfo.studentId}}</text>
+    <view class="profile-meta">
+      <text class="name">{{userInfo.nickname || userInfo.name}}</text>
+      <text class="student-id">{{userInfo.studentId}}</text>
+      <text class="detail">{{userInfo.college}}</text>
+      <text class="detail">{{userInfo.className}}</text>
+      <text class="detail">{{userInfo.phone}}</text>
     </view>
-    <view class="edit-button">
+    <view class="edit-button" bindtap="onEditProfile">
       <text>编辑资料</text>
     </view>
   </view>
 
-  <!-- 功能菜单 -->
-  <view class="menu-section">
-    <view class="menu-item" bindtap="onGoToAdmin">
-      <text class="menu-icon">✨</text>
-      <text class="menu-text">发布活动</text>
-      <text class="menu-arrow">></text>
-    </view>
-    <view class="menu-item">
-      <text class="menu-icon">🎫</text>
-      <text class="menu-text">我的票根</text>
-      <text class="menu-arrow">></text>
-    </view>
-    <view class="menu-item">
-      <text class="menu-icon">📅</text>
-      <text class="menu-text">我的活动</text>
-      <text class="menu-arrow">></text>
-    </view>
-    <view class="menu-item">
-      <text class="menu-icon">⚙️</text>
-      <text class="menu-text">设置</text>
-      <text class="menu-arrow">></text>
-    </view>
-    <view class="menu-item">
-      <text class="menu-icon">❓</text>
-      <text class="menu-text">帮助中心</text>
-      <text class="menu-arrow">></text>
-    </view>
-  </view>
-
-  <!-- 票根展示 -->
-  <view class="ticket-section">
+  <view class="section">
     <view class="section-header">
       <text class="section-title">我的票根</text>
-      <text class="section-more">查看全部</text>
+      <text class="section-more" bindtap="onViewAllTickets">查看全部</text>
     </view>
+
     <view class="ticket-list">
-      <view wx:for="{{tickets}}" wx:key="id" class="ticket-card" bindtap="onTicketTap" data-ticket-number="{{item.ticketNumber}}">
+      <view
+        wx:for="{{tickets}}"
+        wx:key="id"
+        class="ticket-card"
+        bindtap="onTicketTap"
+        data-ticket-number="{{item.ticketNumber}}"
+      >
         <view class="ticket-header">
           <text class="ticket-title">{{item.activityTitle}}</text>
-          <text class="ticket-status {{item.status === 'valid' ? 'status-valid' : 'status-used'}}">{{item.status === 'valid' ? '有效' : '已使用'}}</text>
+          <text class="ticket-status {{item.status === 'valid' ? 'valid' : 'used'}}">
+            {{item.status === 'valid' ? '有效' : '已使用'}}
+          </text>
         </view>
+
         <view class="ticket-info">
           <view class="info-row">
-            <text class="info-label">时间：</text>
+            <text class="info-label">时间</text>
             <text class="info-value">{{item.time}}</text>
           </view>
           <view class="info-row">
-            <text class="info-label">地点：</text>
+            <text class="info-label">地点</text>
             <text class="info-value">{{item.location}}</text>
           </view>
           <view class="info-row">
-            <text class="info-label">座位号：</text>
+            <text class="info-label">座位</text>
             <text class="info-value">{{item.seatNumber}}</text>
           </view>
         </view>
+
         <view class="ticket-qr">
           <image src="{{item.qrCode}}" class="qr-code"></image>
           <text class="ticket-number">{{item.ticketNumber}}</text>
         </view>
       </view>
+
       <view wx:if="{{tickets.length === 0}}" class="empty">
-        <text>暂无票根</text>
+        <text>暂无票根，先去抢票吧</text>
       </view>
     </view>
   </view>

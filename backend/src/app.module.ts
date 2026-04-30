@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ActivitiesModule } from './activities/activities.module';
 import { TicketsModule } from './tickets/tickets.module';
+import { UsersModule } from './users/users.module';
 import { Activity } from './entities/activity.entity';
-import { User } from './entities/user.entity';
 import { Ticket } from './entities/ticket.entity';
 import { TicketStub } from './entities/ticket-stub.entity';
+import { User } from './entities/user.entity';
 
 @Module({
   imports: [
@@ -16,13 +17,14 @@ import { TicketStub } from './entities/ticket-stub.entity';
     }),
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: ':memory:',
+      database: 'database.db',
       entities: [Activity, User, Ticket, TicketStub],
       synchronize: true,
       logging: true,
     }),
     ActivitiesModule,
     TicketsModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],

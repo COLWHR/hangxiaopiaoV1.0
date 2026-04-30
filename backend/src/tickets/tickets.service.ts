@@ -88,18 +88,13 @@ export class TicketsService {
       throw new BadRequestException('No tickets available');
     }
 
-    // 4. 检查用户是否存在，如果不存在则创建
+    // 4. 检查用户是否存在，未登录则拒绝抢票
     let user = await manager.findOne(User, {
       where: { id: userId },
     });
 
     if (!user) {
-      user = manager.create(User, {
-        id: userId,
-        openid: `openid_${userId}`,
-        nickname: `User ${userId}`,
-      });
-      await manager.save(user);
+      throw new NotFoundException('请先登录并完善个人信息');
     }
 
     // 5. 检查用户是否已经抢过票

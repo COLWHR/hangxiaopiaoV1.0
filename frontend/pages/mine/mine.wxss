@@ -1,197 +1,185 @@
-.container {
-  padding: 0;
-  background-color: #f5f5f5;
+.page {
   min-height: 100vh;
+  padding: 24rpx;
+  background: linear-gradient(180deg, #eff6ff 0%, #ffffff 30%, #f5f7fb 100%);
 }
 
-/* 用户信息区域 */
-.user-info {
-  background-color: #1E90FF;
-  padding: 40rpx 20rpx;
+.profile-card {
   display: flex;
   align-items: center;
-  color: #fff;
+  gap: 20rpx;
+  padding: 32rpx 28rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16rpx 50rpx rgba(15, 41, 74, 0.08);
 }
 
 .avatar {
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
-  border: 4rpx solid rgba(255, 255, 255, 0.5);
-  margin-right: 20rpx;
+  flex-shrink: 0;
+  background: #eaf2ff;
 }
 
-.user-details {
+.profile-meta {
   flex: 1;
+  min-width: 0;
 }
 
-.user-name {
-  font-size: 32rpx;
-  font-weight: bold;
-  margin-bottom: 10rpx;
+.name {
   display: block;
+  color: #10233f;
+  font-size: 34rpx;
+  font-weight: 700;
 }
 
-.user-student-id {
+.student-id {
+  display: block;
+  margin-top: 6rpx;
+  color: #1e90ff;
   font-size: 24rpx;
-  opacity: 0.8;
+  font-weight: 600;
+}
+
+.detail {
   display: block;
+  margin-top: 6rpx;
+  color: #60708b;
+  font-size: 22rpx;
+  line-height: 1.5;
 }
 
 .edit-button {
-  padding: 10rpx 20rpx;
-  border: 1rpx solid rgba(255, 255, 255, 0.5);
-  border-radius: 20rpx;
+  align-self: flex-start;
+  padding: 12rpx 18rpx;
+  border-radius: 18rpx;
+  background: rgba(30, 144, 255, 0.12);
+  color: #1e90ff;
   font-size: 22rpx;
+  font-weight: 600;
 }
 
-/* 功能菜单 */
-.menu-section {
-  background-color: #fff;
-  margin-top: 20rpx;
-  border-radius: 12rpx;
-  overflow: hidden;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
-  margin: 20rpx;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  padding: 25rpx 20rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-}
-
-.menu-item:last-child {
-  border-bottom: none;
-}
-
-.menu-icon {
-  font-size: 32rpx;
-  margin-right: 20rpx;
-  width: 40rpx;
-  text-align: center;
-}
-
-.menu-text {
-  flex: 1;
-  font-size: 24rpx;
-  color: #333;
-}
-
-.menu-arrow {
-  font-size: 24rpx;
-  color: #999;
-}
-
-/* 票根展示 */
-.ticket-section {
-  margin: 20rpx;
+.section {
+  margin-top: 24rpx;
+  padding: 24rpx 20rpx 8rpx;
+  border-radius: 28rpx;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12rpx 32rpx rgba(15, 41, 74, 0.06);
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20rpx;
+  margin-bottom: 18rpx;
 }
 
 .section-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
+  color: #10233f;
+  font-size: 30rpx;
+  font-weight: 700;
 }
 
 .section-more {
-  font-size: 24rpx;
-  color: #1E90FF;
+  color: #1e90ff;
+  font-size: 22rpx;
 }
 
 .ticket-list {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  gap: 18rpx;
 }
 
 .ticket-card {
-  background-color: #fff;
-  border-radius: 12rpx;
-  padding: 20rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
-  position: relative;
+  padding: 24rpx;
+  border-radius: 24rpx;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  border: 1rpx solid #e7eef8;
 }
 
 .ticket-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15rpx;
-  padding-bottom: 15rpx;
-  border-bottom: 1rpx solid #f0f0f0;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
 }
 
 .ticket-title {
   flex: 1;
-  font-size: 26rpx;
-  font-weight: bold;
-  color: #333;
-  margin-right: 20rpx;
+  color: #10233f;
+  font-size: 28rpx;
+  font-weight: 700;
+  line-height: 1.35;
 }
 
 .ticket-status {
-  padding: 5rpx 15rpx;
-  border-radius: 15rpx;
-  font-size: 18rpx;
-  background-color: #e6f7ff;
-  color: #1890ff;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 20rpx;
+  font-weight: 600;
+}
+
+.ticket-status.valid {
+  background: rgba(46, 204, 113, 0.12);
+  color: #16a34a;
+}
+
+.ticket-status.used {
+  background: rgba(148, 163, 184, 0.16);
+  color: #64748b;
 }
 
 .ticket-info {
-  margin-bottom: 20rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #edf2f7;
 }
 
 .info-row {
   display: flex;
-  margin-bottom: 10rpx;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-top: 10rpx;
   font-size: 22rpx;
 }
 
 .info-label {
-  color: #999;
-  width: 100rpx;
+  color: #7a8798;
 }
 
 .info-value {
-  color: #333;
   flex: 1;
+  color: #20324d;
+  text-align: right;
 }
 
 .ticket-qr {
   display: flex;
   align-items: center;
-  padding-top: 20rpx;
-  border-top: 1rpx solid #f0f0f0;
+  gap: 18rpx;
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid #edf2f7;
 }
 
 .qr-code {
   width: 120rpx;
   height: 120rpx;
-  margin-right: 20rpx;
+  border-radius: 16rpx;
+  background: #f4f8fd;
 }
 
 .ticket-number {
   flex: 1;
+  color: #60708b;
   font-size: 20rpx;
-  color: #666;
   word-break: break-all;
 }
 
 .empty {
-  background-color: #fff;
-  border-radius: 12rpx;
-  padding: 40rpx;
-  text-align: center;
-  color: #999;
+  padding: 40rpx 0 24rpx;
+  color: #8a98ad;
   font-size: 24rpx;
-  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  text-align: center;
 }
