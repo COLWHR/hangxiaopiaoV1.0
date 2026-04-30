@@ -1,0 +1,453 @@
+/* 容器样式 */
+.container {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+/* ========== 身份验证界面样式 ========== */
+.auth-section {
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+
+.auth-title {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.auth-subtitle {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 600rpx;
+}
+
+.input-group {
+  margin-bottom: 40rpx;
+}
+
+.input-label {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.input-field {
+  width: 100%;
+  height: 88rpx;
+  background: #fff;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  border-color: #1E90FF;
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 26rpx;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.auth-button {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #1E90FF 0%, #0077be 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-button[disabled] {
+  opacity: 0.6;
+}
+
+.auth-tips {
+  margin-top: 80rpx;
+  width: 100%;
+  max-width: 600rpx;
+  background: #fff9e6;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  color: #faad14;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.tips-item {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+/* ========== 活动上传表单样式 ========== */
+.upload-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 顶部导航 */
+.upload-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88rpx;
+  padding: 0 30rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #e8e8e8;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left {
+  width: 80rpx;
+  display: flex;
+  align-items: center;
+}
+
+.back-icon {
+  font-size: 40rpx;
+  color: #333;
+}
+
+.header-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.header-right {
+  width: 80rpx;
+}
+
+/* 进度条 */
+.progress-section {
+  background: #fff;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12rpx;
+  background: #f0f0f0;
+  border-radius: 6rpx;
+  overflow: hidden;
+  margin-bottom: 16rpx;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1E90FF 0%, #00bfff 100%);
+  border-radius: 6rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  text-align: right;
+}
+
+/* 表单滚动区域 */
+.form-scroll {
+  flex: 1;
+  padding: 20rpx 30rpx 40rpx;
+}
+
+/* 表单项 */
+.form-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.form-label {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 20rpx;
+  display: flex;
+  align-items: center;
+}
+
+.required {
+  color: #ff4d4f;
+  margin-right: 8rpx;
+}
+
+.form-input {
+  width: 100%;
+  height: 80rpx;
+  background: #f8f9fa;
+  border: 2rpx solid transparent;
+  border-radius: 10rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  background: #fff;
+  border-color: #1E90FF;
+}
+
+.char-count {
+  font-size: 24rpx;
+  color: #999;
+  text-align: right;
+  margin-top: 12rpx;
+  display: block;
+}
+
+/* 日期选择器 */
+.date-picker-group {
+  display: flex;
+  gap: 20rpx;
+}
+
+.date-picker-item {
+  flex: 1;
+}
+
+.date-label {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.picker-display {
+  width: 100%;
+  height: 80rpx;
+  background: #f8f9fa;
+  border-radius: 10rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 地点选择 */
+.location-group {
+  display: flex;
+  gap: 20rpx;
+}
+
+.location-input {
+  flex: 1;
+}
+
+.location-btn {
+  height: 80rpx;
+  padding: 0 24rpx;
+  background: #1E90FF;
+  color: #fff;
+  border: none;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* 文本域 */
+.form-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  background: #f8f9fa;
+  border: 2rpx solid transparent;
+  border-radius: 10rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+.form-textarea:focus {
+  background: #fff;
+  border-color: #1E90FF;
+}
+
+/* 海报上传 */
+.poster-upload {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #f8f9fa;
+  border: 2rpx dashed #d9d9d9;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.poster-preview {
+  width: 100%;
+  height: 100%;
+}
+
+.poster-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.poster-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.poster-text {
+  font-size: 30rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.poster-tip {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 上传进度 */
+.upload-progress {
+  margin-top: 20rpx;
+}
+
+.progress-bar-small {
+  width: 100%;
+  height: 8rpx;
+  background: #f0f0f0;
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+}
+
+.progress-fill-small {
+  height: 100%;
+  background: linear-gradient(90deg, #1E90FF 0%, #00bfff 100%);
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-text-small {
+  font-size: 22rpx;
+  color: #999;
+  display: block;
+  text-align: center;
+}
+
+/* 表单错误 */
+.form-error {
+  background: #fff2f0;
+  border: 1rpx solid #ffccc7;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  color: #ff4d4f;
+  font-size: 26rpx;
+}
+
+/* 按钮组 */
+.button-group {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+  padding-bottom: 40rpx;
+}
+
+.btn-secondary {
+  flex: 1;
+  height: 88rpx;
+  background: #fff;
+  color: #666;
+  border: 2rpx solid #d9d9d9;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  flex: 1;
+  height: 88rpx;
+  background: linear-gradient(135deg, #1E90FF 0%, #0077be 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary[disabled] {
+  opacity: 0.6;
+}
+
+/* 票根状态样式 */
+.status-valid {
+  color: #52c41a;
+}
+
+.status-used {
+  color: #999;
+}
+
+/* 响应式适配 */
+@media (max-width: 375px) {
+  .auth-section {
+    padding: 40rpx 30rpx;
+  }
+  
+  .auth-title {
+    font-size: 42rpx;
+  }
+  
+  .form-item {
+    padding: 24rpx;
+  }
+}

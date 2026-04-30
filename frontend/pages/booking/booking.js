@@ -1,6 +1,68 @@
 Page({
   data: {
-    activities: [
+    activities: [],
+    activeFilter: '全部',
+    useMockData: false
+  },
+
+  onLoad() {
+    this.getActivities();
+  },
+
+  getActivities() {
+    console.log('获取活动列表');
+    
+    // 先尝试从后端获取
+    wx.request({
+      url: 'http://localhost:3000/activities',
+      method: 'GET',
+      timeout: 5000,
+      success: (res) => {
+        if (res.statusCode === 200 && res.data && res.data.length > 0) {
+          this.setData({
+            activities: this.formatActivities(res.data),
+            useMockData: false
+          });
+        } else {
+          this.useMockActivities();
+        }
+      },
+      fail: (err) => {
+        console.warn('获取活动列表失败，使用模拟数据:', err);
+        this.useMockActivities();
+      }
+    });
+  },
+
+  // 格式化活动数据
+  formatActivities(activities) {
+    return activities.map(activity => ({
+      id: activity.id,
+      title: activity.title,
+      description: activity.description,
+      image: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=event%20concert%20performance%20stage%20audience%20professional%20photography&image_size=landscape_4_3',
+      startTime: this.formatDate(activity.startTime),
+      location: '体育馆',
+      availableTickets: activity.availableTickets,
+      status: activity.status
+    }));
+  },
+
+  // 格式化日期
+  formatDate(dateStr) {
+    if (!dateStr) return '';
+    const date = new Date(dateStr.replace(/-/g, '/'));
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  },
+
+  // 使用模拟数据
+  useMockActivities() {
+    const mockActivities = [
       {
         id: 1,
         title: '2026春季运动会',
@@ -46,18 +108,12 @@ Page({
         availableTickets: 0,
         status: 'ended'
       }
-    ],
-    activeFilter: '全部'
-  },
+    ];
 
-  onLoad() {
-    // 模拟获取活动数据
-    this.getActivities();
-  },
-
-  getActivities() {
-    // 实际项目中这里会调用后端API
-    console.log('获取活动列表');
+    this.setData({
+      activities: mockActivities,
+      useMockData: true
+    });
   },
 
   goToActivity(e) {
@@ -72,11 +128,9 @@ Page({
     this.setData({
       activeFilter: filter
     });
-    // 模拟筛选效果
     wx.showToast({
       title: `筛选 ${filter} 活动`,
       icon: 'none'
     });
-    // 这里可以根据筛选条件过滤活动列表
   }
 });

@@ -14,7 +14,8 @@ Page({
     },
     isCounting: false,
     countdownTitle: '',
-    hasAvailableTickets: false
+    hasAvailableTickets: false,
+    useMockData: false
   },
 
   onLoad(options) {
@@ -23,7 +24,63 @@ Page({
   },
 
   getActivityDetail(activityId) {
-    // 模拟活动数据
+    wx.showLoading({
+      title: '加载活动详情...',
+    });
+
+    // 先尝试从后端获取
+    wx.request({
+      url: `http://localhost:3000/activities/${activityId}`,
+      method: 'GET',
+      timeout: 5000,
+      success: (res) => {
+        wx.hideLoading();
+        if (res.statusCode === 200 && res.data) {
+          const activity = this.formatActivity(res.data);
+          this.setData({
+            activity: activity,
+            canBook: this.checkCanBook(activity),
+            bookButtonText: this.getBookButtonText(activity),
+            hasAvailableTickets: activity.availableTickets > 0,
+            useMockData: false
+          });
+          this.startCountdown();
+        } else {
+          this.useMockActivityData(activityId);
+        }
+      },
+      fail: (err) => {
+        wx.hideLoading();
+        console.warn('获取活动详情失败，使用模拟数据:', err);
+        this.useMockActivityData(activityId);
+      }
+    });
+  },
+
+  // 格式化活动数据
+  formatActivity(activity) {
+    return {
+      id: activity.id,
+      title: activity.title,
+      description: activity.description,
+      image: activity.qrCodeUrl || 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=track%20and%20field%20athletes%20running%20race%20competition%20stadium%20sports%20event%20dynamic%20action%20high%20quality%20wide%20angle&image_size=landscape_16_9',
+      totalTickets: activity.totalTickets,
+      availableTickets: activity.availableTickets,
+      startTime: activity.startTime,
+      endTime: activity.endTime,
+      location: '体育馆',
+      status: activity.status,
+      rules: [
+        '每个学生限抢1张票',
+        '抢票成功后请在活动当天凭票入场',
+        '门票不得转让或倒卖',
+        '如有特殊情况无法参加，请提前24小时取消'
+      ]
+    };
+  },
+
+  // 使用模拟数据
+  useMockActivityData(activityId) {
     const mockActivity = {
       id: activityId,
       title: '2026春季运动会',
@@ -32,7 +89,7 @@ Page({
       totalTickets: 500,
       availableTickets: 120,
       startTime: '2026-04-20 09:00:00',
-      endTime: '2026-04-15 23:59:59',
+      endTime: '2026-04-30 23:59:59',
       location: '体育馆',
       status: 'active',
       rules: [
@@ -47,11 +104,17 @@ Page({
       activity: mockActivity,
       canBook: this.checkCanBook(mockActivity),
       bookButtonText: this.getBookButtonText(mockActivity),
-      hasAvailableTickets: mockActivity.availableTickets > 0
+      hasAvailableTickets: mockActivity.availableTickets > 0,
+      useMockData: true
     });
 
-    // 开始倒计时
     this.startCountdown();
+    
+    wx.showToast({
+      title: '使用模拟数据展示',
+      icon: 'none',
+      duration: 2000
+    });
   },
 
   checkCanBook(activity) {
@@ -185,17 +248,71 @@ Page({
     if (!this.data.canBook) return;
 
     const activityId = this.data.activity.id;
-    const userId = 1; // 实际应该从登录信息中获取
+    const userId = 1;
 
     wx.showLoading({
       title: '正在抢票...',
     });
 
-    // 模拟抢票请求
+    // 先尝试调用后端API
+    wx.request({
+      url: 'http://localhost:3000/tickets/book',
+      method: 'POST',
+      data: {
+        activityId: activityId,
+        userId: userId
+      },
+      timeout: 10000,
+      success: (res) => {
+        wx.hideLoading();
+        if (res.statusCode === 200 || res.statusCode === 201) {
+          wx.showToast({
+            title: '抢票成功',
+            icon: 'success'
+          });
+          // 跳转到票根页面
+          wx.navigateTo({
+            url: `/pages/ticket/ticket?ticketNumber=${res.data.ticketNumber}`
+          });
+        } else {
+          this.handleBookError(res);
+        }
+      },
+      fail: (err) => {
+        wx.hideLoading();
+        console.warn('抢票API调用失败:', err);
+        this.handleBookError(err);
+      }
+    });
+  },
+
+  // 处理抢票错误或降级方案
+  handleBookError(error) {
+    const errorMsg = error.message || '抢票失败，请稍后重试';
+    
+    wx.showModal({
+      title: '提示',
+      content: `${errorMsg}\n\n是否使用模拟抢票？`,
+      confirmText: '模拟抢票',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          this.mockBookTicket();
+        }
+      }
+    });
+  },
+
+  // 模拟抢票
+  mockBookTicket() {
+    wx.showLoading({
+      title: '正在模拟抢票...',
+    });
+
     setTimeout(() => {
       wx.hideLoading();
       wx.showToast({
-        title: '抢票成功',
+        title: '模拟抢票成功',
         icon: 'success'
       });
       // 跳转到票根页面

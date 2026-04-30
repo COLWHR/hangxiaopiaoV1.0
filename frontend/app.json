@@ -4,7 +4,8 @@
     "pages/booking/booking",
     "pages/activity/activity",
     "pages/ticket/ticket",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/admin/admin"
   ],
   "window": {
     "backgroundTextStyle": "light",

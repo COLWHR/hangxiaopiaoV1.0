@@ -13,6 +13,11 @@
 
   <!-- 功能菜单 -->
   <view class="menu-section">
+    <view class="menu-item" bindtap="onGoToAdmin">
+      <text class="menu-icon">✨</text>
+      <text class="menu-text">发布活动</text>
+      <text class="menu-arrow">></text>
+    </view>
     <view class="menu-item">
       <text class="menu-icon">🎫</text>
       <text class="menu-text">我的票根</text>
@@ -42,10 +47,10 @@
       <text class="section-more">查看全部</text>
     </view>
     <view class="ticket-list">
-      <view wx:for="{{tickets}}" wx:key="id" class="ticket-card">
+      <view wx:for="{{tickets}}" wx:key="id" class="ticket-card" bindtap="onTicketTap" data-ticket-number="{{item.ticketNumber}}">
         <view class="ticket-header">
           <text class="ticket-title">{{item.activityTitle}}</text>
-          <text class="ticket-status">{{item.status === 'valid' ? '有效' : '已使用'}}</text>
+          <text class="ticket-status {{item.status === 'valid' ? 'status-valid' : 'status-used'}}">{{item.status === 'valid' ? '有效' : '已使用'}}</text>
         </view>
         <view class="ticket-info">
           <view class="info-row">
