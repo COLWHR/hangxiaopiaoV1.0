@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
 import { User } from '../entities/user.entity';
 import { UsersService } from './users.service';
 
@@ -23,7 +23,7 @@ export class UsersController {
   async findByStudentId(@Param('studentId') studentId: string) {
     const user = await this.usersService.findByStudentId(studentId);
     if (!user) {
-      throw new Error('用户不存在');
+      throw new NotFoundException('用户不存在');
     }
     return user;
   }

@@ -69,7 +69,7 @@ Page({
   getTickets() {
     const currentUser = getCurrentUser();
 
-    if (!currentUser?.id) {
+    if (!currentUser || !currentUser.id) {
       this.setData({ tickets: [] });
       return;
     }

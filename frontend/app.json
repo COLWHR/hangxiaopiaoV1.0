@@ -10,7 +10,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "学校抢票小程序",
+    "navigationBarTitleText": "航小票",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

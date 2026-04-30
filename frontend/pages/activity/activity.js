@@ -1,3 +1,5 @@
+const { getApiUrl, getCurrentUser } = require('../../utils/user');
+
 Page({
   data: {
     activity: {},
@@ -248,7 +250,18 @@ Page({
     if (!this.data.canBook) return;
 
     const activityId = this.data.activity.id;
-    const userId = 1;
+    const currentUser = getCurrentUser();
+
+    if (!currentUser || !currentUser.id) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none',
+      });
+      wx.navigateTo({
+        url: '/pages/register/register',
+      });
+      return;
+    }
 
     wx.showLoading({
       title: '正在抢票...',
@@ -256,11 +269,11 @@ Page({
 
     // 先尝试调用后端API
     wx.request({
-      url: 'http://localhost:3000/tickets/book',
+      url: getApiUrl('/tickets/book'),
       method: 'POST',
       data: {
         activityId: activityId,
-        userId: userId
+        userId: currentUser.id
       },
       timeout: 10000,
       success: (res) => {

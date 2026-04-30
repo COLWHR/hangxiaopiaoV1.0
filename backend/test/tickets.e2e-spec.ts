@@ -5,6 +5,20 @@ import { AppModule } from '../src/app.module';
 
 describe('Tickets API', () => {
   let app: INestApplication;
+  const runId = Date.now().toString();
+
+  const createTestUser = async (suffix: string) => {
+    return request(app.getHttpServer())
+      .post('/users/profile')
+      .send({
+        name: `Test User ${suffix}`,
+        studentId: `${runId.slice(-10)}${suffix}`,
+        college: '计算机学院',
+        className: '2023级1班',
+        phone: `1380000${suffix.padStart(4, '0')}`,
+      })
+      .expect(201);
+  };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -51,13 +65,15 @@ describe('Tickets API', () => {
       });
 
     const activityId = activityResponse.body.id;
+    const userResponse = await createTestUser('1');
+    const userId = userResponse.body.data.id;
 
     // Then book a ticket
     const ticketResponse = await request(app.getHttpServer())
       .post('/tickets/book')
       .send({
         activityId: activityId,
-        userId: 1,
+        userId: userId,
       })
       .expect(201);
 
@@ -82,13 +98,15 @@ describe('Tickets API', () => {
       });
 
     const activityId = activityResponse.body.id;
+    const userResponse = await createTestUser('2');
+    const userId = userResponse.body.data.id;
 
     // Then book a ticket
     const ticketResponse = await request(app.getHttpServer())
       .post('/tickets/book')
       .send({
         activityId: activityId,
-        userId: 2,
+        userId: userId,
       });
 
     const ticketNumber = ticketResponse.body.ticketNumber;
@@ -117,13 +135,15 @@ describe('Tickets API', () => {
       });
 
     const activityId = activityResponse.body.id;
+    const firstUserResponse = await createTestUser('3');
+    const secondUserResponse = await createTestUser('4');
 
     // Book the only ticket
     await request(app.getHttpServer())
       .post('/tickets/book')
       .send({
         activityId: activityId,
-        userId: 3,
+        userId: firstUserResponse.body.data.id,
       })
       .expect(201);
 
@@ -132,7 +152,7 @@ describe('Tickets API', () => {
       .post('/tickets/book')
       .send({
         activityId: activityId,
-        userId: 4,
+        userId: secondUserResponse.body.data.id,
       })
       .expect(400);
   });
@@ -151,13 +171,15 @@ describe('Tickets API', () => {
       });
 
     const activityId = activityResponse.body.id;
+    const userResponse = await createTestUser('5');
+    const userId = userResponse.body.data.id;
 
     // Book a ticket
     await request(app.getHttpServer())
       .post('/tickets/book')
       .send({
         activityId: activityId,
-        userId: 5,
+        userId: userId,
       })
       .expect(201);
 
@@ -166,7 +188,7 @@ describe('Tickets API', () => {
       .post('/tickets/book')
       .send({
         activityId: activityId,
-        userId: 5,
+        userId: userId,
       })
       .expect(400);
   });

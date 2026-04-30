@@ -27,7 +27,7 @@ function normalizeUser(user = {}) {
 function getCurrentUser() {
   try {
     const app = typeof getApp === 'function' ? getApp() : null;
-    const globalUser = app?.globalData?.currentUser;
+    const globalUser = app && app.globalData ? app.globalData.currentUser : null;
     if (globalUser) {
       return normalizeUser(globalUser);
     }

@@ -170,7 +170,7 @@ Page({
       ...this.data.formData,
     };
 
-    if (currentUser?.id) {
+    if (currentUser && currentUser.id) {
       payload.id = currentUser.id;
     }
 
@@ -181,7 +181,7 @@ Page({
       timeout: 8000,
       success: (res) => {
         if (res.statusCode === 200 || res.statusCode === 201) {
-          const user = normalizeUser(res.data?.data || payload);
+          const user = normalizeUser((res.data && res.data.data) || payload);
           setCurrentUser(user);
 
           wx.showToast({
@@ -198,7 +198,7 @@ Page({
         }
 
         this.setData({
-          formError: res.data?.message || '保存失败，请稍后再试',
+          formError: (res.data && res.data.message) || '保存失败，请稍后再试',
           isSubmitting: false,
         });
       },
