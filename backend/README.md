@@ -31,6 +31,14 @@
 $ npm install
 ```
 
+## Create the database
+
+```bash
+$ npm run db:init
+```
+
+This command recreates `database.db` from the current TypeORM entities.
+
 ## Compile and run the project
 
 ```bash
