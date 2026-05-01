@@ -1,19 +1,12 @@
 <view class="container">
-  <!-- 活动图片 -->
-  <image src="{{activity.image}}" mode="aspectFill" class="activity-image"></image>
+  <image src="{{activity.coverImageUrl}}" mode="aspectFill" class="activity-image"></image>
 
   <view class="activity-card">
-    <!-- 活动标题 -->
     <text class="activity-title">{{activity.title}}</text>
-    
-    <!-- 活动描述 -->
     <text class="activity-description">{{activity.description}}</text>
-    
-    <!-- 倒计时 -->
+
     <view class="countdown-section" wx:if="{{isCounting}}">
-      <text class="countdown-title">
-        {{countdownTitle}}
-      </text>
+      <text class="countdown-title">{{countdownTitle}}</text>
       <view class="countdown">
         <view class="countdown-item">
           <text class="countdown-number">{{countdown.days}}</text>
@@ -36,12 +29,11 @@
         </view>
       </view>
     </view>
-    
-    <!-- 活动信息 -->
+
     <view class="activity-info">
       <view class="info-item">
         <text class="info-label">活动时间:</text>
-        <text class="info-value">{{activity.startTime}}</text>
+        <text class="info-value">{{activity.displayStartTime}} - {{activity.displayEndTime}}</text>
       </view>
       <view class="info-item">
         <text class="info-label">活动地点:</text>
@@ -57,8 +49,7 @@
         <text class="info-value sold-out" wx:else>已售罄</text>
       </view>
     </view>
-    
-    <!-- 活动规则 -->
+
     <view class="rules-section">
       <text class="rules-title">活动规则</text>
       <view class="rules-list">
@@ -68,13 +59,8 @@
         </view>
       </view>
     </view>
-    
-    <!-- 抢票按钮 -->
-    <button 
-      class="book-button" 
-      bindtap="bookTicket" 
-      disabled="{{!canBook}}"
-    >
+
+    <button class="book-button" bindtap="bookTicket" disabled="{{!canBook}}">
       {{bookButtonText}}
     </button>
   </view>

@@ -14,28 +14,31 @@ export class User {
   id: number;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
-  nickname: string;
+  nickname: string | null;
 
   @Column({ type: 'varchar', length: 512, nullable: true })
-  avatarUrl: string;
+  avatarUrl: string | null;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
-  name: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  name: string | null;
 
-  @Column({ type: 'varchar', length: 50, unique: true, nullable: false })
-  studentId: string;
+  @Column({ type: 'varchar', length: 50, unique: true, nullable: true })
+  studentId: string | null;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
-  college: string;
-
-  @Column({ type: 'varchar', length: 50, nullable: false })
-  className: string;
-
-  @Column({ type: 'varchar', length: 20, nullable: false })
-  phone: string;
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  college: string | null;
 
   @Column({ type: 'varchar', length: 50, nullable: true })
-  openid: string;
+  className: string | null;
+
+  @Column({ type: 'varchar', length: 20, unique: true, nullable: false })
+  phone: string | null;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  passwordHash: string | null;
+
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  openid: string | null;
 
   @Column({ type: 'boolean', default: false })
   profileCompleted: boolean;

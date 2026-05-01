@@ -119,6 +119,21 @@
   color: #999;
 }
 
+.status.pending {
+  background-color: #fff7e6;
+  color: #d48806;
+}
+
+.status.sold-out {
+  background-color: #fff1f0;
+  color: #cf1322;
+}
+
+.status.revoked {
+  background-color: #f5f5f5;
+  color: #64748b;
+}
+
 .activity-info {
   margin-bottom: 20rpx;
 }

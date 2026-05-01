@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Ticket } from '../entities/ticket.entity';
 import { TicketStub } from '../entities/ticket-stub.entity';
 import { Activity } from '../entities/activity.entity';
@@ -9,6 +9,8 @@ import { ActivitiesService } from '../activities/activities.service';
 import * as qrcode from 'qrcode';
 import * as Redis from 'redis';
 import * as amqp from 'amqplib';
+
+const BOOKABLE_ACTIVITY_STATUSES = new Set(['active', 'published']);
 
 @Injectable()
 export class TicketsService {
@@ -22,114 +24,126 @@ export class TicketsService {
     private ticketStubsRepository: Repository<TicketStub>,
     private activitiesService: ActivitiesService,
     private dataSource: DataSource,
-  ) {
+  ) {}
+
+  private async getRedisClient(): Promise<Redis.RedisClientType | null> {
+    if (this.redisClient) {
+      return this.redisClient;
+    }
+
+    if (!process.env.REDIS_HOST || !process.env.REDIS_PORT) {
+      return null;
+    }
+
     try {
-      // 初始化Redis客户端
       this.redisClient = Redis.createClient({
         url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
         password: process.env.REDIS_PASSWORD,
       });
-      this.redisClient.connect().catch((error) => {
-        console.error('Failed to connect to Redis:', error);
-        this.redisClient = null;
-      });
+      await this.redisClient.connect();
+      return this.redisClient;
     } catch (error) {
-      console.error('Failed to initialize Redis:', error);
+      console.error('Failed to connect to Redis:', error);
       this.redisClient = null;
+      return null;
     }
-
-    // 初始化RabbitMQ连接
-    this.initRabbitMQ();
   }
 
-  private async initRabbitMQ() {
+  private async getRabbitMQChannel(): Promise<amqp.Channel | null> {
+    if (this.rabbitMQChannel) {
+      return this.rabbitMQChannel;
+    }
+
+    if (!process.env.RABBITMQ_HOST) {
+      return null;
+    }
+
     try {
       const connection = await amqp.connect({
         hostname: process.env.RABBITMQ_HOST,
-        port: parseInt(process.env.RABBITMQ_PORT || '5672'),
+        port: parseInt(process.env.RABBITMQ_PORT || '5672', 10),
         username: process.env.RABBITMQ_USERNAME,
         password: process.env.RABBITMQ_PASSWORD,
       });
       this.rabbitMQChannel = await connection.createChannel();
       await this.rabbitMQChannel.assertQueue('ticket_queue', { durable: true });
+      return this.rabbitMQChannel;
     } catch (error) {
       console.error('Failed to connect to RabbitMQ:', error);
+      this.rabbitMQChannel = null;
+      return null;
     }
   }
 
-  async bookTicket(
-    activityId: number,
-    userId: number,
-  ): Promise<Ticket> {
+  async bookTicket(activityId: number, userId: number): Promise<Ticket> {
     return this.dataSource.transaction(async (manager) => {
-    // 1. 检查活动是否存在
-    const activity = await manager.findOne(Activity, {
-      where: { id: activityId },
-    });
+      const activity = await manager.findOne(Activity, {
+        where: { id: activityId },
+      });
 
-    if (!activity) {
-      throw new NotFoundException(`Activity with ID ${activityId} not found`);
-    }
+      if (!activity) {
+        throw new NotFoundException(`Activity with ID ${activityId} not found`);
+      }
 
-    // 2. 检查活动状态
-    const now = new Date();
-    if (now < activity.startTime) {
-      throw new ForbiddenException('Ticket booking has not started yet');
-    }
-    if (now > activity.endTime) {
-      throw new ForbiddenException('Ticket booking has ended');
-    }
-    if (activity.status !== 'active') {
-      throw new ForbiddenException('Activity is not active');
-    }
+      const now = new Date();
+      const startTime = new Date(activity.startTime);
+      const endTime = new Date(activity.endTime);
 
-    // 3. 检查剩余票数
-    if (activity.availableTickets <= 0) {
-      throw new BadRequestException('No tickets available');
-    }
+      if (Number.isNaN(startTime.getTime()) || Number.isNaN(endTime.getTime())) {
+        throw new BadRequestException('Activity time is invalid');
+      }
 
-    // 4. 检查用户是否存在，未登录则拒绝抢票
-    let user = await manager.findOne(User, {
-      where: { id: userId },
-    });
+      if (now < startTime) {
+        throw new ForbiddenException('Ticket booking has not started yet');
+      }
+      if (now > endTime) {
+        throw new ForbiddenException('Ticket booking has ended');
+      }
+      if (!BOOKABLE_ACTIVITY_STATUSES.has(activity.status)) {
+        throw new ForbiddenException('Activity is not active');
+      }
 
-    if (!user) {
-      throw new NotFoundException('请先登录并完善个人信息');
-    }
+      if (activity.availableTickets <= 0) {
+        throw new BadRequestException('No tickets available');
+      }
 
-    // 5. 检查用户是否已经抢过票
-    const existingTicket = await manager.findOne(Ticket, {
-      where: { activityId, userId },
-    });
+      const user = await manager.findOne(User, {
+        where: { id: userId },
+      });
 
-    if (existingTicket) {
-      throw new BadRequestException('You have already booked a ticket for this activity');
-    }
+      if (!user) {
+        throw new NotFoundException('Please log in and complete your profile first');
+      }
 
-    // 5. 生成门票编号和座位号
-    const ticketNumber = `T${Date.now()}${Math.floor(Math.random() * 1000)}`;
-    const seatNumber = `${Math.floor(Math.random() * 100) + 1}`;
+      if (!user.profileCompleted) {
+        throw new ForbiddenException('Please complete your profile first');
+      }
 
-    // 6. 创建门票
-    const ticket = manager.create(Ticket, {
-      activityId,
-      userId,
-      ticketNumber,
-      seatNumber,
-      status: 'valid',
-    });
+      const existingTicket = await manager.findOne(Ticket, {
+        where: { activityId, userId },
+      });
 
-    // 7. 减少剩余票数
-    activity.availableTickets -= 1;
-    await manager.save(activity);
+      if (existingTicket) {
+        throw new BadRequestException('You have already booked a ticket for this activity');
+      }
 
-    // 8. 保存门票
-    await manager.save(ticket);
+      const ticketNumber = `T${Date.now()}${Math.floor(Math.random() * 1000)}`;
+      const seatNumber = `${Math.floor(Math.random() * 100) + 1}`;
 
-    // 9. 生成票根
-    await this.generateTicketStub(ticket.id, manager);
+      const ticket = manager.create(Ticket, {
+        activityId,
+        userId,
+        ticketNumber,
+        seatNumber,
+        status: 'valid',
+      });
 
-    return ticket;
+      activity.availableTickets -= 1;
+      await manager.save(activity);
+      await manager.save(ticket);
+      await this.generateTicketStub(ticket.id, manager);
+
+      return ticket;
     });
   }
 
@@ -138,17 +152,19 @@ export class TicketsService {
       where: { id: ticketId },
     });
 
-    if (ticket) {
-      const qrCodeData = `https://miniprogram.com/ticket/${ticket.ticketNumber}`;
-      const qrCodeUrl = await qrcode.toDataURL(qrCodeData);
-
-      const ticketStub = (manager || this.ticketStubsRepository).create(TicketStub, {
-        ticketId,
-        qrCodeUrl,
-      });
-
-      await (manager || this.ticketStubsRepository).save(ticketStub);
+    if (!ticket) {
+      return;
     }
+
+    const qrCodeData = `https://miniprogram.com/ticket/${ticket.ticketNumber}`;
+    const qrCodeUrl = await qrcode.toDataURL(qrCodeData);
+
+    const ticketStub = (manager || this.ticketStubsRepository).create(TicketStub, {
+      ticketId,
+      qrCodeUrl,
+    });
+
+    await (manager || this.ticketStubsRepository).save(ticketStub);
   }
 
   async getTicketByNumber(ticketNumber: string): Promise<Ticket> {
@@ -171,64 +187,58 @@ export class TicketsService {
     });
   }
 
-  // 异步处理抢票请求（使用消息队列）
   async asyncBookTicket(activityId: number, userId: number): Promise<{ message: string }> {
-    // 如果Redis或RabbitMQ不可用，降级为同步处理
-    if (!this.redisClient || !this.rabbitMQChannel) {
+    const redisClient = await this.getRedisClient();
+    const rabbitMQChannel = await this.getRabbitMQChannel();
+
+    if (!redisClient || !rabbitMQChannel) {
       await this.bookTicket(activityId, userId);
       return { message: 'Ticket booked successfully' };
     }
 
     try {
-      // 1. 检查Redis中是否已经抢过票
       const redisKey = `ticket:${activityId}:${userId}`;
-      const hasBooked = await this.redisClient.get(redisKey);
+      const hasBooked = await redisClient.get(redisKey);
 
       if (hasBooked) {
         throw new BadRequestException('You have already booked a ticket for this activity');
       }
 
-      // 2. 检查活动状态和剩余票数（从Redis缓存）
       const activityKey = `activity:${activityId}`;
-      const activityData = await this.redisClient.get(activityKey);
+      const activityData = await redisClient.get(activityKey);
 
       if (!activityData) {
-        // 从数据库获取活动信息并缓存
         const activity = await this.activitiesService.findOne(activityId);
-        await this.redisClient.set(activityKey, JSON.stringify(activity), {
-          EX: 3600, // 缓存1小时
+        await redisClient.set(activityKey, JSON.stringify(activity), {
+          EX: 3600,
         });
       }
 
-      // 3. 发送消息到队列
-      if (this.rabbitMQChannel) {
-        const message = JSON.stringify({ activityId, userId });
-        this.rabbitMQChannel.sendToQueue('ticket_queue', Buffer.from(message), {
-          persistent: true,
-        });
-      }
+      rabbitMQChannel.sendToQueue('ticket_queue', Buffer.from(JSON.stringify({ activityId, userId })), {
+        persistent: true,
+      });
 
       return { message: 'Booking request received, please wait for confirmation' };
     } catch (error) {
-      // 出错时降级为同步处理
       await this.bookTicket(activityId, userId);
       return { message: 'Ticket booked successfully' };
     }
   }
 
-  // 处理队列中的抢票请求
   async processBookingRequest(data: { activityId: number; userId: number }) {
     try {
       await this.bookTicket(data.activityId, data.userId);
-      
-      // 设置Redis标记
-      if (this.redisClient) {
+
+      const redisClient = await this.getRedisClient();
+      if (redisClient) {
         const redisKey = `ticket:${data.activityId}:${data.userId}`;
-        await this.redisClient.set(redisKey, '1', {
-          EX: 86400, // 缓存24小时
-        }).catch((error) => {
-          console.error('Failed to set Redis key:', error);
-        });
+        await redisClient
+          .set(redisKey, '1', {
+            EX: 86400,
+          })
+          .catch((error) => {
+            console.error('Failed to set Redis key:', error);
+          });
       }
     } catch (error) {
       console.error('Error processing booking request:', error);

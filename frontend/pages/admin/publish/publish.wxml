@@ -1,0 +1,122 @@
+<view class="page-shell">
+  <view class="hero-card">
+    <view class="section-heading">
+      <view>
+        <text class="section-title">活动编辑</text>
+        <text class="section-meta">新增、编辑、撤回、再发布都从这里开始。</text>
+      </view>
+      <button class="secondary-button mini-action" bindtap="goToActivities">查看列表</button>
+    </view>
+  </view>
+
+  <view class="panel-card">
+    <view class="section-heading">
+      <text class="section-title">基础信息</text>
+      <status-pill label="{{statusMeta.label}}" className="{{statusMeta.className}}" />
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>活动标题</text>
+      <input class="input-box" placeholder="请输入活动标题" value="{{draft.title}}" data-field="title" bindinput="onInput" />
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>活动简介</text>
+      <textarea
+        class="textarea-box"
+        placeholder="请输入活动简介"
+        value="{{draft.summary}}"
+        data-field="summary"
+        bindinput="onInput"
+      ></textarea>
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>活动地点</text>
+      <input class="input-box" placeholder="请输入活动地点" value="{{draft.location}}" data-field="location" bindinput="onInput" />
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>总票数</text>
+      <input class="input-box" type="number" placeholder="请输入总票数" value="{{draft.totalTickets}}" data-field="totalTickets" bindinput="onInput" />
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>开始时间</text>
+      <picker mode="multiSelector" range="{{dateRange}}" value="{{startSelector}}" bindchange="onDateChange" data-field="startTime">
+        <view class="picker-box">{{draft.startTime || '选择开始时间'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>结束时间</text>
+      <picker mode="multiSelector" range="{{dateRange}}" value="{{endSelector}}" bindchange="onDateChange" data-field="endTime">
+        <view class="picker-box">{{draft.endTime || '选择结束时间'}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="panel-card">
+    <view class="section-heading">
+      <text class="section-title">图片与规则</text>
+      <text class="section-meta">先用示意图占位，后续可以替换成真实上传。</text>
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>封面图</text>
+      <view class="image-field">
+        <image wx:if="{{draft.coverImage}}" src="{{draft.coverImage}}" class="preview-image" mode="aspectFill" />
+        <button class="secondary-button" data-field="coverImage" bindtap="onChooseImage">填入示意图</button>
+      </view>
+    </view>
+
+    <view class="form-field">
+      <text class="field-label">票根图</text>
+      <view class="image-field">
+        <image wx:if="{{draft.ticketStubImage}}" src="{{draft.ticketStubImage}}" class="preview-image" mode="aspectFill" />
+        <button class="secondary-button" data-field="ticketStubImage" bindtap="onChooseImage">填入示意图</button>
+      </view>
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>票根口号</text>
+      <input class="input-box" placeholder="请输入票根口号" value="{{draft.ticketStubSlogan}}" data-field="ticketStubSlogan" bindinput="onInput" />
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>票根前缀</text>
+      <input class="input-box" placeholder="例如 HXP" value="{{draft.ticketNumberPrefix}}" data-field="ticketNumberPrefix" bindinput="onInput" />
+    </view>
+
+    <view class="form-field">
+      <text class="field-label"><text class="field-required">*</text>座位规则</text>
+      <input class="input-box" placeholder="请输入座位号规则" value="{{draft.seatRule}}" data-field="seatRule" bindinput="onInput" />
+    </view>
+  </view>
+
+  <view class="panel-card">
+    <view class="section-heading">
+      <text class="section-title">报名字段</text>
+      <text class="section-meta">至少保留一个字段，姓名和学号默认启用。</text>
+    </view>
+
+    <view class="field-list">
+      <view wx:for="{{draft.registrationFields}}" wx:key="key" class="field-toggle {{item.enabled ? 'field-toggle-active' : ''}}" data-key="{{item.key}}" bindtap="onFieldToggle">
+        <view>
+          <text class="field-toggle-title">{{item.label}}</text>
+          <text class="field-toggle-desc">{{item.description}}</text>
+        </view>
+        <text class="field-toggle-status">{{item.enabled ? '启用' : '关闭'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{errorMessage}}" class="error-banner">{{errorMessage}}</view>
+
+  <view class="button-row">
+    <button class="secondary-button" bindtap="handleSaveDraft">保存草稿</button>
+    <button class="secondary-button" bindtap="goBackToSelect">切换角色</button>
+    <button class="danger-button" bindtap="handleLogout">退出登录</button>
+    <button class="primary-button" bindtap="handlePreview">{{publishButtonText}}</button>
+  </view>
+</view>

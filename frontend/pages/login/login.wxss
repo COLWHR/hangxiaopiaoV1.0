@@ -1,0 +1,92 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28rpx;
+  padding-top: 72rpx;
+}
+
+.login-hero {
+  padding: 40rpx 36rpx;
+  background: linear-gradient(145deg, #123c7a 0%, #1f8fff 65%, #7dd3fc 100%);
+}
+
+.login-eyebrow,
+.login-title,
+.login-subtitle {
+  display: block;
+  color: #ffffff;
+}
+
+.login-eyebrow {
+  font-size: 24rpx;
+  letter-spacing: 4rpx;
+  opacity: 0.9;
+}
+
+.login-title {
+  margin-top: 20rpx;
+  font-size: 50rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.login-subtitle {
+  margin-top: 22rpx;
+  font-size: 26rpx;
+  line-height: 1.8;
+  opacity: 0.95;
+}
+
+.login-panel {
+  padding: 34rpx;
+}
+
+.login-field {
+  margin-bottom: 22rpx;
+}
+
+.login-error {
+  margin: 8rpx 0 24rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 18rpx;
+  background: #fff1f2;
+  color: #dc2626;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.login-actions {
+  margin-top: 16rpx;
+}
+
+.login-footer {
+  margin-top: 14rpx;
+  text-align: center;
+}
+
+.login-switch {
+  display: inline-block;
+  color: #1e90ff;
+  font-size: 24rpx;
+}
+
+.login-tips {
+  padding: 28rpx 30rpx;
+  background: #fffdfa;
+}
+
+.tips-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #10233f;
+}
+
+.tips-line {
+  display: block;
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  line-height: 1.7;
+  color: #6b7a90;
+}

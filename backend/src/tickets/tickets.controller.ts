@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { Ticket } from '../entities/ticket.entity';
 
@@ -22,7 +22,7 @@ export class TicketsController {
   }
 
   @Get('user/:userId')
-  async getUserTickets(@Param('userId') userId: number): Promise<Ticket[]> {
+  async getUserTickets(@Param('userId', ParseIntPipe) userId: number): Promise<Ticket[]> {
     return this.ticketsService.getUserTickets(userId);
   }
 }

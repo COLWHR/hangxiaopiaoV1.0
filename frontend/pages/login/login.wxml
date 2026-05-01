@@ -1,0 +1,45 @@
+<view class="page-shell login-page">
+  <view class="hero-card login-hero">
+    <text class="login-eyebrow">用户端登录</text>
+    <text class="login-title">手机号 + 密码登录</text>
+    <text class="login-subtitle">首次登录后会自动进入资料补全页，补全完成后即可查看活动、抢票和票根。</text>
+  </view>
+
+  <view class="panel-card login-panel">
+    <view class="login-field">
+      <text class="field-label"><text class="field-required">*</text>手机号码</text>
+      <input
+        class="input-box"
+        type="number"
+        maxlength="11"
+        placeholder="请输入手机号码"
+        value="{{formData.phone}}"
+        bindinput="onPhoneInput"
+      />
+    </view>
+
+    <view class="login-field">
+      <text class="field-label"><text class="field-required">*</text>密码</text>
+      <input
+        class="input-box"
+        password
+        placeholder="请输入密码"
+        value="{{formData.password}}"
+        bindinput="onPasswordInput"
+      />
+    </view>
+
+    <view wx:if="{{formError}}" class="login-error">{{formError}}</view>
+
+    <view class="button-row login-actions">
+      <button class="secondary-button" bindtap="goBackToSelect">返回选择身份</button>
+      <button class="primary-button" bindtap="onLogin" disabled="{{isSubmitting}}">
+        {{isSubmitting ? '登录中...' : '登录'}}
+      </button>
+    </view>
+
+    <view class="login-footer">
+      <text class="login-switch">如果是第一次使用，登录后会自动进入资料补全。</text>
+    </view>
+  </view>
+</view>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { ActivitiesService } from './activities.service';
 import { Activity } from '../entities/activity.entity';
 
@@ -12,27 +12,33 @@ export class ActivitiesController {
   }
 
   @Get()
-  findAll(): Promise<Activity[]> {
-    return this.activitiesService.findAll();
+  findAll(
+    @Query('adminAccountId') adminAccountId?: string,
+    @Query('adminUserId') adminUserId?: string,
+  ): Promise<Activity[]> {
+    return this.activitiesService.findAll({
+      adminAccountId,
+      adminUserId,
+    });
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise<Activity> {
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Activity> {
     return this.activitiesService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() activityData: Partial<Activity>): Promise<Activity> {
+  update(@Param('id', ParseIntPipe) id: number, @Body() activityData: Partial<Activity>): Promise<Activity> {
     return this.activitiesService.update(id, activityData);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.activitiesService.remove(id);
   }
 
   @Get(':id/tickets')
-  getActivityWithTickets(@Param('id') id: number): Promise<Activity> {
+  getActivityWithTickets(@Param('id', ParseIntPipe) id: number): Promise<Activity> {
     return this.activitiesService.getActivityWithTickets(id);
   }
 }

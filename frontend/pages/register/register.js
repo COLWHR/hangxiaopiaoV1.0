@@ -1,4 +1,7 @@
-const { getApiUrl, getCurrentUser, normalizeUser, setCurrentUser } = require('../../utils/user');
+const { getApiUrl } = require('../../utils/api');
+const { getCurrentUser, normalizeUser, setCurrentUser } = require('../../utils/user');
+const { requestJson } = require('../../utils/request');
+const { setCurrentRole } = require('../../utils/role');
 
 Page({
   data: {
@@ -29,63 +32,53 @@ Page({
     formError: '',
     isSubmitting: false,
     isEditing: false,
+    phoneLocked: true,
+    pageTitle: '完善个人信息',
+    pageSubtitle: '补全资料后，个人信息会同步到数据库和“我的”页面。',
   },
 
   onLoad(options = {}) {
     this.mode = options.mode || '';
     const currentUser = getCurrentUser();
 
-    if (currentUser && this.mode !== 'edit') {
+    if (!currentUser) {
+      wx.reLaunch({
+        url: '/pages/login/login',
+      });
+      return;
+    }
+
+    setCurrentRole('user');
+    const normalizedUser = setCurrentUser(normalizeUser(currentUser));
+    if (normalizedUser.profileCompleted && this.mode !== 'edit') {
       wx.switchTab({
         url: '/pages/mine/mine',
       });
       return;
     }
 
-    if (currentUser) {
-      this.loadProfileFromServer(currentUser.id);
-    }
-  },
-
-  loadProfileFromServer(userId) {
-    wx.request({
-      url: getApiUrl(`/users/profile/${userId}`),
-      method: 'GET',
-      timeout: 5000,
-      success: (res) => {
-        if (res.statusCode === 200 && res.data) {
-          this.applyProfile(res.data);
-          return;
-        }
-
-        const currentUser = getCurrentUser();
-        if (currentUser) {
-          this.applyProfile(currentUser);
-        }
-      },
-      fail: () => {
-        const currentUser = getCurrentUser();
-        if (currentUser) {
-          this.applyProfile(currentUser);
-        }
-      },
-    });
+    this.applyProfile(normalizedUser);
   },
 
   applyProfile(user) {
-    const normalizedUser = normalizeUser(user);
-    const collegeIndex = Math.max(this.data.collegeOptions.indexOf(normalizedUser.college), 0);
+    const collegeIndex = Math.max(this.data.collegeOptions.indexOf(user.college), 0);
 
     this.setData({
       collegeIndex,
       formData: {
-        name: normalizedUser.name || '',
-        studentId: normalizedUser.studentId || '',
-        college: normalizedUser.college || '',
-        className: normalizedUser.className || '',
-        phone: normalizedUser.phone || '',
+        name: user.name || '',
+        studentId: user.studentId || '',
+        college: user.college || '',
+        className: user.className || '',
+        phone: user.phone || '',
       },
       isEditing: true,
+      phoneLocked: true,
+      pageTitle: this.mode === 'edit' ? '编辑个人信息' : '完善个人信息',
+      pageSubtitle:
+        this.mode === 'edit'
+          ? '修改后的信息会立即同步到数据库和“我的”页面。'
+          : '首次登录后请补全资料，完成后即可进入“我的”。',
       formError: '',
     });
   },
@@ -120,21 +113,14 @@ Page({
     });
   },
 
-  onPhoneInput(e) {
-    this.setData({
-      'formData.phone': e.detail.value,
-      formError: '',
-    });
-  },
-
   validateForm() {
     const { name, studentId, college, className, phone } = this.data.formData;
 
     if (!name || name.trim().length < 2) {
-      return '请输入有效的姓名，至少 2 个字';
+      return '请输入真实姓名，至少 2 个字';
     }
 
-    if (!studentId || !/^\d{8,12}$/.test(studentId)) {
+    if (!studentId || !/^\d{8,12}$/.test(studentId.trim())) {
       return '请输入有效的学号，8-12 位数字';
     }
 
@@ -146,17 +132,25 @@ Page({
       return '请输入有效的班级信息';
     }
 
-    if (!phone || !/^1\d{10}$/.test(phone)) {
-      return '请输入有效的手机号';
+    if (!phone || !/^1\d{10}$/.test(phone.trim())) {
+      return '手机号格式不正确';
     }
 
     return '';
   },
 
-  onRegister() {
+  async onRegister() {
     const error = this.validateForm();
     if (error) {
       this.setData({ formError: error });
+      return;
+    }
+
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+      wx.reLaunch({
+        url: '/pages/login/login',
+      });
       return;
     }
 
@@ -165,52 +159,53 @@ Page({
       formError: '',
     });
 
-    const currentUser = getCurrentUser();
     const payload = {
       ...this.data.formData,
+      id: currentUser.id,
     };
 
-    if (currentUser && currentUser.id) {
-      payload.id = currentUser.id;
-    }
-
-    wx.request({
-      url: getApiUrl('/users/profile'),
-      method: 'POST',
-      data: payload,
-      timeout: 8000,
-      success: (res) => {
-        if (res.statusCode === 200 || res.statusCode === 201) {
-          const user = normalizeUser((res.data && res.data.data) || payload);
-          setCurrentUser(user);
-
-          wx.showToast({
-            title: '保存成功',
-            icon: 'success',
-          });
-
-          setTimeout(() => {
-            wx.switchTab({
-              url: '/pages/mine/mine',
-            });
-          }, 500);
-          return;
-        }
-
-        this.setData({
-          formError: (res.data && res.data.message) || '保存失败，请稍后再试',
-          isSubmitting: false,
-        });
-      },
-      fail: () => {
-        this.setData({
-          formError: '网络请求失败，请检查后端服务是否启动',
-          isSubmitting: false,
-        });
-      },
-      complete: () => {
-        this.setData({ isSubmitting: false });
-      },
+    wx.showLoading({
+      title: '保存中...',
     });
+
+    try {
+      const response = await requestJson({
+        url: getApiUrl('/users/profile'),
+        method: 'POST',
+        data: payload,
+      });
+
+      if (response.statusCode === 200 || response.statusCode === 201) {
+        const user = setCurrentUser(normalizeUser((response.data && response.data.data) || payload));
+        setCurrentRole('user');
+
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success',
+        });
+
+        if (user.profileCompleted) {
+          wx.switchTab({
+            url: '/pages/mine/mine',
+          });
+        } else {
+          this.setData({
+            formError: '资料未完整，请继续补充',
+          });
+        }
+        return;
+      }
+
+      this.setData({
+        formError: (response.data && response.data.message) || '保存失败，请稍后再试',
+      });
+    } catch (error) {
+      this.setData({
+        formError: '网络请求失败，请检查后端服务是否已启动',
+      });
+    } finally {
+      wx.hideLoading();
+      this.setData({ isSubmitting: false });
+    }
   },
 });

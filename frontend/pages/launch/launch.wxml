@@ -1,0 +1,29 @@
+<view class="launch-page">
+  <view class="hero">
+    <text class="eyebrow">统一入口</text>
+    <text class="title">先选择身份，再进入对应登录流程</text>
+    <text class="subtitle">用户端使用手机号 + 密码登录，发布端使用后端预置的管理员账号登录。</text>
+  </view>
+
+  <view class="mode-grid">
+    <view class="mode-card mode-user" bindtap="chooseUser">
+      <text class="mode-tag">用户端</text>
+      <text class="mode-title">抢票 / 资料 / 票根</text>
+      <text class="mode-desc">面向学生用户，先登录，再完善资料，之后浏览活动并抢票。</text>
+      <text class="mode-action">进入用户端</text>
+    </view>
+
+    <view class="mode-card mode-admin" bindtap="choosePublisher">
+      <text class="mode-tag">发布端</text>
+      <text class="mode-title">新增 / 编辑 / 撤回 / 再发布</text>
+      <text class="mode-desc">面向活动管理员，使用后端预置账号登录，管理活动全生命周期。</text>
+      <text class="mode-action">进入发布端</text>
+    </view>
+  </view>
+
+  <view class="status-card">
+    <text class="status-title">当前状态</text>
+    <text class="status-line">用户端读取当前用户信息，发布端读取管理员会话。</text>
+    <text class="status-line">两个端共享同一套后端活动与票务接口。</text>
+  </view>
+</view>

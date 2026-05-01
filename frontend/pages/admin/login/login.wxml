@@ -1,0 +1,38 @@
+<view class="page-shell login-page">
+  <view class="hero-card login-hero">
+    <text class="login-eyebrow">发布端登录</text>
+    <text class="login-title">使用后端预置管理员账号登录</text>
+    <text class="login-subtitle">这里不再使用本地 mock。管理员账号由后端统一管理，登录后即可进入活动新增、编辑、撤回和再发布流程。</text>
+  </view>
+
+  <view class="panel-card login-panel">
+    <view class="section-heading">
+      <text class="section-title">管理员认证</text>
+      <text class="section-meta">默认账号已预置为 ADMIN2024</text>
+    </view>
+
+    <view class="login-field">
+      <text class="field-label"><text class="field-required">*</text>管理员账号</text>
+      <input class="input-box" placeholder="请输入管理员账号" value="{{account}}" bindinput="onAccountInput" />
+    </view>
+
+    <view class="login-field">
+      <text class="field-label"><text class="field-required">*</text>登录密码</text>
+      <input class="input-box" password placeholder="请输入登录密码" value="{{password}}" bindinput="onPasswordInput" />
+    </view>
+
+    <view wx:if="{{errorMessage}}" class="login-error">{{errorMessage}}</view>
+
+    <view class="button-row login-actions">
+      <button class="secondary-button" bindtap="goBackToSelect">返回选择身份</button>
+      <button class="primary-button" bindtap="handleSubmit" loading="{{loading}}" disabled="{{loading}}">进入发布端</button>
+    </view>
+  </view>
+
+  <view class="notice-card login-tips">
+    <text class="tips-title">说明</text>
+    <text class="tips-line">1. 发布端统一走后端 `/admin/login`。</text>
+    <text class="tips-line">2. 登录后保存管理员会话，本地不再维护 mock 管理员数据。</text>
+    <text class="tips-line">3. 管理员账号会和活动主键一起绑定到后端活动数据。</text>
+  </view>
+</view>

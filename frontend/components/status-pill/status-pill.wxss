@@ -1,0 +1,29 @@
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 20rpx;
+  font-weight: 600;
+}
+
+.pill-draft {
+  background: rgba(96, 113, 139, 0.12);
+  color: #60718b;
+}
+
+.pill-preview {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+}
+
+.pill-published {
+  background: rgba(46, 204, 113, 0.12);
+  color: #16a34a;
+}
+
+.pill-revoked {
+  background: rgba(148, 163, 184, 0.16);
+  color: #64748b;
+}

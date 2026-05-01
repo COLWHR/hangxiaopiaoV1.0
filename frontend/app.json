@@ -1,16 +1,22 @@
 {
   "pages": [
+    "pages/launch/launch",
+    "pages/login/login",
     "pages/register/register",
     "pages/index/index",
     "pages/booking/booking",
     "pages/activity/activity",
     "pages/ticket/ticket",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/admin/login/login",
+    "pages/admin/publish/publish",
+    "pages/admin/preview/preview",
+    "pages/admin/activities/activities"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "航小票",
+    "navigationBarTitleText": "\u822a\u5c0f\u7968",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -21,15 +27,15 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "\u9996\u9875"
       },
       {
         "pagePath": "pages/booking/booking",
-        "text": "抢票"
+        "text": "\u62a2\u7968"
       },
       {
         "pagePath": "pages/mine/mine",
-        "text": "我的"
+        "text": "\u6211\u7684"
       }
     ]
   },

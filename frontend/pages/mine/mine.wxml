@@ -2,11 +2,11 @@
   <view class="profile-card">
     <image src="{{userInfo.avatarUrl}}" class="avatar"></image>
     <view class="profile-meta">
-      <text class="name">{{userInfo.nickname || userInfo.name}}</text>
-      <text class="student-id">{{userInfo.studentId}}</text>
-      <text class="detail">{{userInfo.college}}</text>
-      <text class="detail">{{userInfo.className}}</text>
-      <text class="detail">{{userInfo.phone}}</text>
+      <text class="name">{{userInfo.nickname || userInfo.name || '未设置姓名'}}</text>
+      <text class="student-id">{{userInfo.studentId || '未设置学号'}}</text>
+      <text class="detail">{{userInfo.college || '未设置学院'}}</text>
+      <text class="detail">{{userInfo.className || '未设置班级'}}</text>
+      <text class="detail">{{userInfo.phone || '未设置手机号'}}</text>
     </view>
     <view class="edit-button" bindtap="onEditProfile">
       <text>编辑资料</text>
@@ -27,6 +27,8 @@
         bindtap="onTicketTap"
         data-ticket-number="{{item.ticketNumber}}"
       >
+        <image wx:if="{{item.coverImageUrl}}" src="{{item.coverImageUrl}}" class="ticket-cover" mode="aspectFill"></image>
+
         <view class="ticket-header">
           <text class="ticket-title">{{item.activityTitle}}</text>
           <text class="ticket-status {{item.status === 'valid' ? 'valid' : 'used'}}">
@@ -56,8 +58,13 @@
       </view>
 
       <view wx:if="{{tickets.length === 0}}" class="empty">
-        <text>暂无票根，先去抢票吧</text>
+        <text>暂无票根，先去首页看看活动吧</text>
       </view>
     </view>
+  </view>
+
+  <view class="button-row">
+    <button class="secondary-button" bindtap="onGoToAdmin">切换身份</button>
+    <button class="danger-button" bindtap="onLogout">退出登录</button>
   </view>
 </view>
