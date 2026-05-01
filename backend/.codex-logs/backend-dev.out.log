@@ -1,0 +1,563 @@
+
+> backend@0.0.1 start:dev
+> nest start --watch
+
+[2J[3J[H[[90m12:04:22[0m] Starting compilation in watch mode...
+
+[[90m12:04:31[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +49ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +3ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+query: PRAGMA foreign_keys = OFF
+query: BEGIN TRANSACTION
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'index' AND "tbl_name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: PRAGMA table_xinfo("ticket_stubs")
+query: PRAGMA index_list("ticket_stubs")
+query: PRAGMA foreign_key_list("ticket_stubs")
+query: PRAGMA table_xinfo("tickets")
+query: PRAGMA index_list("tickets")
+query: PRAGMA foreign_key_list("tickets")
+query: PRAGMA table_xinfo("users")
+query: PRAGMA index_list("users")
+query: PRAGMA foreign_key_list("users")
+query: PRAGMA table_xinfo("activities")
+query: PRAGMA index_list("activities")
+query: PRAGMA foreign_key_list("activities")
+query: PRAGMA table_xinfo("admin_accounts")
+query: PRAGMA index_list("admin_accounts")
+query: PRAGMA foreign_key_list("admin_accounts")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_3")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_1")
+query: PRAGMA index_info("sqlite_autoindex_ticket_stubs_1")
+query: PRAGMA index_info("sqlite_autoindex_tickets_1")
+query: PRAGMA index_info("sqlite_autoindex_users_2")
+query: PRAGMA index_info("sqlite_autoindex_users_1")
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" = 'typeorm_metadata'
+query: CREATE TABLE "admin_activity_drafts" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "adminAccountId" varchar(64) NOT NULL, "adminUserId" varchar(64) NOT NULL, "draftData" text, "lastClearedAt" datetime, "createdAt" datetime NOT NULL DEFAULT (datetime('now')), "updatedAt" datetime NOT NULL DEFAULT (datetime('now')), CONSTRAINT "UQ_8ed23592b6cc47743d6866b2037" UNIQUE ("adminAccountId"), CONSTRAINT "UQ_feea52e76fb636525153561a2b9" UNIQUE ("adminUserId"))
+query: COMMIT
+query: PRAGMA foreign_keys = ON
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +80ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mActivitiesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTicketsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +7ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +6ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mActivitiesController {/activities}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, PATCH} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id/tickets, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAdminController {/admin}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTicketsController {/tickets}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book/async, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/by-number/:ticketNumber, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/user/:userId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/register, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/student/:studentId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/phone/:phone, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/:id, PATCH} route[39m[38;5;3m +1ms[39m
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+[32m[Nest] 26736  - [39m2026/05/01 12:04:35 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +13ms[39m
+[2J[3J[H[[90m12:59:59[0m] File change detected. Starting incremental compilation...
+
+[[90m13:00:00[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m13:00:01[0m] File change detected. Starting incremental compilation...
+
+[[90m13:00:03[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m13:00:03[0m] File change detected. Starting incremental compilation...
+
+[[90m13:00:05[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +53ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+query: PRAGMA foreign_keys = OFF
+query: BEGIN TRANSACTION
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'index' AND "tbl_name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: PRAGMA table_xinfo("ticket_stubs")
+query: PRAGMA index_list("ticket_stubs")
+query: PRAGMA foreign_key_list("ticket_stubs")
+query: PRAGMA table_xinfo("tickets")
+query: PRAGMA index_list("tickets")
+query: PRAGMA foreign_key_list("tickets")
+query: PRAGMA table_xinfo("users")
+query: PRAGMA index_list("users")
+query: PRAGMA foreign_key_list("users")
+query: PRAGMA table_xinfo("activities")
+query: PRAGMA index_list("activities")
+query: PRAGMA foreign_key_list("activities")
+query: PRAGMA table_xinfo("admin_accounts")
+query: PRAGMA index_list("admin_accounts")
+query: PRAGMA foreign_key_list("admin_accounts")
+query: PRAGMA table_xinfo("admin_activity_drafts")
+query: PRAGMA index_list("admin_activity_drafts")
+query: PRAGMA foreign_key_list("admin_activity_drafts")
+query: PRAGMA index_info("sqlite_autoindex_users_2")
+query: PRAGMA index_info("sqlite_autoindex_users_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_3")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_1")
+query: PRAGMA index_info("sqlite_autoindex_tickets_1")
+query: PRAGMA index_info("sqlite_autoindex_ticket_stubs_1")
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" = 'typeorm_metadata'
+query: COMMIT
+query: PRAGMA foreign_keys = ON
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +70ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mActivitiesModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTicketsModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +4ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +5ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mActivitiesController {/activities}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id/tickets, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAdminController {/admin}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTicketsController {/tickets}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book/async, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/by-number/:ticketNumber, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/user/:userId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/register, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/student/:studentId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/phone/:phone, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/:id, PATCH} route[39m[38;5;3m +1ms[39m
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+[32m[Nest] 26720  - [39m2026/05/01 13:00:07 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +13ms[39m
+[2J[3J[H[[90m13:00:07[0m] File change detected. Starting incremental compilation...
+
+[[90m13:00:08[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +55ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+query: PRAGMA foreign_keys = OFF
+query: BEGIN TRANSACTION
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'index' AND "tbl_name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: PRAGMA table_xinfo("ticket_stubs")
+query: PRAGMA index_list("ticket_stubs")
+query: PRAGMA foreign_key_list("ticket_stubs")
+query: PRAGMA table_xinfo("tickets")
+query: PRAGMA index_list("tickets")
+query: PRAGMA foreign_key_list("tickets")
+query: PRAGMA table_xinfo("users")
+query: PRAGMA index_list("users")
+query: PRAGMA foreign_key_list("users")
+query: PRAGMA table_xinfo("activities")
+query: PRAGMA index_list("activities")
+query: PRAGMA foreign_key_list("activities")
+query: PRAGMA table_xinfo("admin_accounts")
+query: PRAGMA index_list("admin_accounts")
+query: PRAGMA foreign_key_list("admin_accounts")
+query: PRAGMA table_xinfo("admin_activity_drafts")
+query: PRAGMA index_list("admin_activity_drafts")
+query: PRAGMA foreign_key_list("admin_activity_drafts")
+query: PRAGMA index_info("sqlite_autoindex_ticket_stubs_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_1")
+query: PRAGMA index_info("sqlite_autoindex_tickets_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_3")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_1")
+query: PRAGMA index_info("sqlite_autoindex_users_2")
+query: PRAGMA index_info("sqlite_autoindex_users_1")
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" = 'typeorm_metadata'
+query: COMMIT
+query: PRAGMA foreign_keys = ON
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +63ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mActivitiesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTicketsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +6ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mActivitiesController {/activities}:[39m[38;5;3m +2ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id/tickets, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAdminController {/admin}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTicketsController {/tickets}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book/async, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/by-number/:ticketNumber, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/user/:userId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/register, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/student/:studentId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/phone/:phone, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/:id, PATCH} route[39m[38;5;3m +1ms[39m
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+[32m[Nest] 22860  - [39m2026/05/01 13:00:10 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +14ms[39m
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."phone" = ?)) LIMIT 1 -- PARAMETERS: ["13800000001"]
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE "User"."id" IN (1)
+query: BEGIN TRANSACTION
+query: UPDATE "users" SET "passwordHash" = ?, "updatedAt" = CURRENT_TIMESTAMP WHERE "id" IN (1) -- PARAMETERS: ["pbkdf2$120000$a3dfc0cb17a150b6b53f3832e15df600$7419d3ac9028e031f53f2314c39ee7699f2dca73687c0d446eb5680ab7c1e220"]
+query: SELECT "User"."id" AS "User_id", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE "User"."id" = 1
+query: COMMIT
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."id" = 2)) LIMIT 1
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."phone" = ?)) LIMIT 1 -- PARAMETERS: ["13800000002"]
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE "User"."id" IN (2)
+query: BEGIN TRANSACTION
+query: UPDATE "users" SET "college" = ?, "className" = ?, "updatedAt" = CURRENT_TIMESTAMP WHERE "id" IN (2) -- PARAMETERS: ["?????????","2023?2?"]
+query: SELECT "User"."id" AS "User_id", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE "User"."id" = 2
+query: COMMIT
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE "User"."id" IN (2)
+query: BEGIN TRANSACTION
+query: UPDATE "users" SET "college" = ?, "className" = ?, "passwordHash" = ?, "updatedAt" = ? WHERE "id" IN (2) -- PARAMETERS: ["计算机学院","2023级1班","pbkdf2$120000$dfac2f6d0514a1ed76ecb540e69f1428$ba4bc93b4461e4a360807ab7f3aa7706299bd6b47cedf52c25d6fe8537ba1c7b","2026-04-30 13:59:36"]
+query: SELECT "User"."id" AS "User_id", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE "User"."id" = 2
+query: COMMIT
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."adminAccountId" = ?) AND ("Activity"."adminUserId" = ?)) ORDER BY "Activity"."createdAt" DESC -- PARAMETERS: ["admin-account-001","admin-user-001"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."id" = 27)) LIMIT 1
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."adminAccountId" = ?) AND ("Activity"."adminUserId" = ?)) ORDER BY "Activity"."createdAt" DESC -- PARAMETERS: ["admin-account-001","admin-user-001"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."id" = 75)) LIMIT 1
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE "Activity"."id" IN (75)
+query: BEGIN TRANSACTION
+query: UPDATE "activities" SET "status" = ?, "updatedAt" = CURRENT_TIMESTAMP WHERE "id" IN (75) -- PARAMETERS: ["revoked"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE "Activity"."id" = 75
+query: COMMIT
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."adminAccountId" = ?) AND ("Activity"."adminUserId" = ?)) ORDER BY "Activity"."createdAt" DESC -- PARAMETERS: ["admin-account-001","admin-user-001"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."id" = 74)) LIMIT 1
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE "Activity"."id" IN (74)
+query: BEGIN TRANSACTION
+query: UPDATE "activities" SET "status" = ?, "updatedAt" = CURRENT_TIMESTAMP WHERE "id" IN (74) -- PARAMETERS: ["revoked"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE "Activity"."id" = 74
+query: COMMIT
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."adminAccountId" = ?) AND ("Activity"."adminUserId" = ?)) ORDER BY "Activity"."createdAt" DESC -- PARAMETERS: ["admin-account-001","admin-user-001"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."id" = 61)) LIMIT 1
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE "Activity"."id" IN (61)
+query: BEGIN TRANSACTION
+query: UPDATE "activities" SET "status" = ?, "updatedAt" = CURRENT_TIMESTAMP WHERE "id" IN (61) -- PARAMETERS: ["revoked"]
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE "Activity"."id" = 61
+query: COMMIT
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" WHERE (("Activity"."adminAccountId" = ?) AND ("Activity"."adminUserId" = ?)) ORDER BY "Activity"."createdAt" DESC -- PARAMETERS: ["admin-account-001","admin-user-001"]
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."phone" = ?)) LIMIT 1 -- PARAMETERS: ["13800000002"]
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."id" = 2)) LIMIT 1
+query: SELECT "Ticket"."id" AS "Ticket_id", "Ticket"."activityId" AS "Ticket_activityId", "Ticket"."userId" AS "Ticket_userId", "Ticket"."ticketNumber" AS "Ticket_ticketNumber", "Ticket"."seatNumber" AS "Ticket_seatNumber", "Ticket"."status" AS "Ticket_status", "Ticket"."createdAt" AS "Ticket_createdAt", "Ticket__Ticket_activity"."id" AS "Ticket__Ticket_activity_id", "Ticket__Ticket_activity"."title" AS "Ticket__Ticket_activity_title", "Ticket__Ticket_activity"."description" AS "Ticket__Ticket_activity_description", "Ticket__Ticket_activity"."location" AS "Ticket__Ticket_activity_location", "Ticket__Ticket_activity"."coverImageUrl" AS "Ticket__Ticket_activity_coverImageUrl", "Ticket__Ticket_activity"."galleryImageUrl" AS "Ticket__Ticket_activity_galleryImageUrl", "Ticket__Ticket_activity"."ticketStubImageUrl" AS "Ticket__Ticket_activity_ticketStubImageUrl", "Ticket__Ticket_activity"."ticketStubSlogan" AS "Ticket__Ticket_activity_ticketStubSlogan", "Ticket__Ticket_activity"."ticketNumberPrefix" AS "Ticket__Ticket_activity_ticketNumberPrefix", "Ticket__Ticket_activity"."seatRule" AS "Ticket__Ticket_activity_seatRule", "Ticket__Ticket_activity"."registrationFields" AS "Ticket__Ticket_activity_registrationFields", "Ticket__Ticket_activity"."adminAccountId" AS "Ticket__Ticket_activity_adminAccountId", "Ticket__Ticket_activity"."adminUserId" AS "Ticket__Ticket_activity_adminUserId", "Ticket__Ticket_activity"."totalTickets" AS "Ticket__Ticket_activity_totalTickets", "Ticket__Ticket_activity"."availableTickets" AS "Ticket__Ticket_activity_availableTickets", "Ticket__Ticket_activity"."startTime" AS "Ticket__Ticket_activity_startTime", "Ticket__Ticket_activity"."endTime" AS "Ticket__Ticket_activity_endTime", "Ticket__Ticket_activity"."status" AS "Ticket__Ticket_activity_status", "Ticket__Ticket_activity"."qrCodeUrl" AS "Ticket__Ticket_activity_qrCodeUrl", "Ticket__Ticket_activity"."createdAt" AS "Ticket__Ticket_activity_createdAt", "Ticket__Ticket_activity"."updatedAt" AS "Ticket__Ticket_activity_updatedAt", "Ticket__Ticket_ticketStub"."id" AS "Ticket__Ticket_ticketStub_id", "Ticket__Ticket_ticketStub"."ticketId" AS "Ticket__Ticket_ticketStub_ticketId", "Ticket__Ticket_ticketStub"."qrCodeUrl" AS "Ticket__Ticket_ticketStub_qrCodeUrl", "Ticket__Ticket_ticketStub"."generatedAt" AS "Ticket__Ticket_ticketStub_generatedAt" FROM "tickets" "Ticket" LEFT JOIN "activities" "Ticket__Ticket_activity" ON "Ticket__Ticket_activity"."id"="Ticket"."activityId"  LEFT JOIN "ticket_stubs" "Ticket__Ticket_ticketStub" ON "Ticket__Ticket_ticketStub"."ticketId"="Ticket"."id" WHERE (("Ticket"."userId" = 2))
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."id" = 2)) LIMIT 1
+query: SELECT "Ticket"."id" AS "Ticket_id", "Ticket"."activityId" AS "Ticket_activityId", "Ticket"."userId" AS "Ticket_userId", "Ticket"."ticketNumber" AS "Ticket_ticketNumber", "Ticket"."seatNumber" AS "Ticket_seatNumber", "Ticket"."status" AS "Ticket_status", "Ticket"."createdAt" AS "Ticket_createdAt", "Ticket__Ticket_activity"."id" AS "Ticket__Ticket_activity_id", "Ticket__Ticket_activity"."title" AS "Ticket__Ticket_activity_title", "Ticket__Ticket_activity"."description" AS "Ticket__Ticket_activity_description", "Ticket__Ticket_activity"."location" AS "Ticket__Ticket_activity_location", "Ticket__Ticket_activity"."coverImageUrl" AS "Ticket__Ticket_activity_coverImageUrl", "Ticket__Ticket_activity"."galleryImageUrl" AS "Ticket__Ticket_activity_galleryImageUrl", "Ticket__Ticket_activity"."ticketStubImageUrl" AS "Ticket__Ticket_activity_ticketStubImageUrl", "Ticket__Ticket_activity"."ticketStubSlogan" AS "Ticket__Ticket_activity_ticketStubSlogan", "Ticket__Ticket_activity"."ticketNumberPrefix" AS "Ticket__Ticket_activity_ticketNumberPrefix", "Ticket__Ticket_activity"."seatRule" AS "Ticket__Ticket_activity_seatRule", "Ticket__Ticket_activity"."registrationFields" AS "Ticket__Ticket_activity_registrationFields", "Ticket__Ticket_activity"."adminAccountId" AS "Ticket__Ticket_activity_adminAccountId", "Ticket__Ticket_activity"."adminUserId" AS "Ticket__Ticket_activity_adminUserId", "Ticket__Ticket_activity"."totalTickets" AS "Ticket__Ticket_activity_totalTickets", "Ticket__Ticket_activity"."availableTickets" AS "Ticket__Ticket_activity_availableTickets", "Ticket__Ticket_activity"."startTime" AS "Ticket__Ticket_activity_startTime", "Ticket__Ticket_activity"."endTime" AS "Ticket__Ticket_activity_endTime", "Ticket__Ticket_activity"."status" AS "Ticket__Ticket_activity_status", "Ticket__Ticket_activity"."qrCodeUrl" AS "Ticket__Ticket_activity_qrCodeUrl", "Ticket__Ticket_activity"."createdAt" AS "Ticket__Ticket_activity_createdAt", "Ticket__Ticket_activity"."updatedAt" AS "Ticket__Ticket_activity_updatedAt", "Ticket__Ticket_ticketStub"."id" AS "Ticket__Ticket_ticketStub_id", "Ticket__Ticket_ticketStub"."ticketId" AS "Ticket__Ticket_ticketStub_ticketId", "Ticket__Ticket_ticketStub"."qrCodeUrl" AS "Ticket__Ticket_ticketStub_qrCodeUrl", "Ticket__Ticket_ticketStub"."generatedAt" AS "Ticket__Ticket_ticketStub_generatedAt" FROM "tickets" "Ticket" LEFT JOIN "activities" "Ticket__Ticket_activity" ON "Ticket__Ticket_activity"."id"="Ticket"."activityId"  LEFT JOIN "ticket_stubs" "Ticket__Ticket_ticketStub" ON "Ticket__Ticket_ticketStub"."ticketId"="Ticket"."id" WHERE (("Ticket"."userId" = 2))
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" ORDER BY "Activity"."createdAt" DESC
+query: SELECT "Activity"."id" AS "Activity_id", "Activity"."title" AS "Activity_title", "Activity"."description" AS "Activity_description", "Activity"."location" AS "Activity_location", "Activity"."coverImageUrl" AS "Activity_coverImageUrl", "Activity"."galleryImageUrl" AS "Activity_galleryImageUrl", "Activity"."ticketStubImageUrl" AS "Activity_ticketStubImageUrl", "Activity"."ticketStubSlogan" AS "Activity_ticketStubSlogan", "Activity"."ticketNumberPrefix" AS "Activity_ticketNumberPrefix", "Activity"."seatRule" AS "Activity_seatRule", "Activity"."registrationFields" AS "Activity_registrationFields", "Activity"."adminAccountId" AS "Activity_adminAccountId", "Activity"."adminUserId" AS "Activity_adminUserId", "Activity"."totalTickets" AS "Activity_totalTickets", "Activity"."availableTickets" AS "Activity_availableTickets", "Activity"."startTime" AS "Activity_startTime", "Activity"."endTime" AS "Activity_endTime", "Activity"."status" AS "Activity_status", "Activity"."qrCodeUrl" AS "Activity_qrCodeUrl", "Activity"."createdAt" AS "Activity_createdAt", "Activity"."updatedAt" AS "Activity_updatedAt" FROM "activities" "Activity" ORDER BY "Activity"."createdAt" DESC
+[2J[3J[H[[90m13:03:20[0m] File change detected. Starting incremental compilation...
+
+[[90m13:03:21[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m13:03:23[0m] File change detected. Starting incremental compilation...
+
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +31ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+query: PRAGMA foreign_keys = OFF
+query: BEGIN TRANSACTION
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'index' AND "tbl_name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: PRAGMA table_xinfo("ticket_stubs")
+query: PRAGMA index_list("ticket_stubs")
+query: PRAGMA foreign_key_list("ticket_stubs")
+query: PRAGMA table_xinfo("tickets")
+query: PRAGMA index_list("tickets")
+query: PRAGMA foreign_key_list("tickets")
+query: PRAGMA table_xinfo("users")
+query: PRAGMA index_list("users")
+query: PRAGMA foreign_key_list("users")
+query: PRAGMA table_xinfo("activities")
+query: PRAGMA index_list("activities")
+query: PRAGMA foreign_key_list("activities")
+query: PRAGMA table_xinfo("admin_accounts")
+query: PRAGMA index_list("admin_accounts")
+query: PRAGMA foreign_key_list("admin_accounts")
+query: PRAGMA table_xinfo("admin_activity_drafts")
+query: PRAGMA index_list("admin_activity_drafts")
+query: PRAGMA foreign_key_list("admin_activity_drafts")
+query: PRAGMA index_info("sqlite_autoindex_users_2")
+query: PRAGMA index_info("sqlite_autoindex_users_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_3")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_1")
+query: PRAGMA index_info("sqlite_autoindex_ticket_stubs_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_1")
+query: PRAGMA index_info("sqlite_autoindex_tickets_1")
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" = 'typeorm_metadata'
+query: COMMIT
+query: PRAGMA foreign_keys = ON
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +60ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mActivitiesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTicketsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +4ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +4ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mActivitiesController {/activities}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id/tickets, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAdminController {/admin}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTicketsController {/tickets}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book/async, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/by-number/:ticketNumber, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/user/:userId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/register, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/student/:studentId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/phone/:phone, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/:id, PATCH} route[39m[38;5;3m +1ms[39m
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+[32m[Nest] 11604  - [39m2026/05/01 13:03:23 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +13ms[39m
+[[90m13:03:24[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +57ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+query: PRAGMA foreign_keys = OFF
+query: BEGIN TRANSACTION
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'index' AND "tbl_name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: PRAGMA table_xinfo("ticket_stubs")
+query: PRAGMA index_list("ticket_stubs")
+query: PRAGMA foreign_key_list("ticket_stubs")
+query: PRAGMA table_xinfo("tickets")
+query: PRAGMA index_list("tickets")
+query: PRAGMA foreign_key_list("tickets")
+query: PRAGMA table_xinfo("users")
+query: PRAGMA index_list("users")
+query: PRAGMA foreign_key_list("users")
+query: PRAGMA table_xinfo("activities")
+query: PRAGMA index_list("activities")
+query: PRAGMA foreign_key_list("activities")
+query: PRAGMA table_xinfo("admin_accounts")
+query: PRAGMA index_list("admin_accounts")
+query: PRAGMA foreign_key_list("admin_accounts")
+query: PRAGMA table_xinfo("admin_activity_drafts")
+query: PRAGMA index_list("admin_activity_drafts")
+query: PRAGMA foreign_key_list("admin_activity_drafts")
+query: PRAGMA index_info("sqlite_autoindex_users_2")
+query: PRAGMA index_info("sqlite_autoindex_users_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_3")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_1")
+query: PRAGMA index_info("sqlite_autoindex_ticket_stubs_1")
+query: PRAGMA index_info("sqlite_autoindex_tickets_1")
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" = 'typeorm_metadata'
+query: COMMIT
+query: PRAGMA foreign_keys = ON
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +69ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mActivitiesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTicketsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +4ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mActivitiesController {/activities}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id/tickets, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAdminController {/admin}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTicketsController {/tickets}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book/async, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/by-number/:ticketNumber, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/user/:userId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/register, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/student/:studentId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/phone/:phone, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/:id, PATCH} route[39m[38;5;3m +0ms[39m
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+[32m[Nest] 25944  - [39m2026/05/01 13:03:26 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +14ms[39m
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."id" = 2)) LIMIT 1
+query: SELECT "Ticket"."id" AS "Ticket_id", "Ticket"."activityId" AS "Ticket_activityId", "Ticket"."userId" AS "Ticket_userId", "Ticket"."ticketNumber" AS "Ticket_ticketNumber", "Ticket"."seatNumber" AS "Ticket_seatNumber", "Ticket"."status" AS "Ticket_status", "Ticket"."createdAt" AS "Ticket_createdAt", "Ticket__Ticket_activity"."id" AS "Ticket__Ticket_activity_id", "Ticket__Ticket_activity"."title" AS "Ticket__Ticket_activity_title", "Ticket__Ticket_activity"."description" AS "Ticket__Ticket_activity_description", "Ticket__Ticket_activity"."location" AS "Ticket__Ticket_activity_location", "Ticket__Ticket_activity"."coverImageUrl" AS "Ticket__Ticket_activity_coverImageUrl", "Ticket__Ticket_activity"."galleryImageUrl" AS "Ticket__Ticket_activity_galleryImageUrl", "Ticket__Ticket_activity"."ticketStubImageUrl" AS "Ticket__Ticket_activity_ticketStubImageUrl", "Ticket__Ticket_activity"."ticketStubSlogan" AS "Ticket__Ticket_activity_ticketStubSlogan", "Ticket__Ticket_activity"."ticketNumberPrefix" AS "Ticket__Ticket_activity_ticketNumberPrefix", "Ticket__Ticket_activity"."seatRule" AS "Ticket__Ticket_activity_seatRule", "Ticket__Ticket_activity"."registrationFields" AS "Ticket__Ticket_activity_registrationFields", "Ticket__Ticket_activity"."adminAccountId" AS "Ticket__Ticket_activity_adminAccountId", "Ticket__Ticket_activity"."adminUserId" AS "Ticket__Ticket_activity_adminUserId", "Ticket__Ticket_activity"."totalTickets" AS "Ticket__Ticket_activity_totalTickets", "Ticket__Ticket_activity"."availableTickets" AS "Ticket__Ticket_activity_availableTickets", "Ticket__Ticket_activity"."startTime" AS "Ticket__Ticket_activity_startTime", "Ticket__Ticket_activity"."endTime" AS "Ticket__Ticket_activity_endTime", "Ticket__Ticket_activity"."status" AS "Ticket__Ticket_activity_status", "Ticket__Ticket_activity"."qrCodeUrl" AS "Ticket__Ticket_activity_qrCodeUrl", "Ticket__Ticket_activity"."createdAt" AS "Ticket__Ticket_activity_createdAt", "Ticket__Ticket_activity"."updatedAt" AS "Ticket__Ticket_activity_updatedAt", "Ticket__Ticket_ticketStub"."id" AS "Ticket__Ticket_ticketStub_id", "Ticket__Ticket_ticketStub"."ticketId" AS "Ticket__Ticket_ticketStub_ticketId", "Ticket__Ticket_ticketStub"."qrCodeUrl" AS "Ticket__Ticket_ticketStub_qrCodeUrl", "Ticket__Ticket_ticketStub"."generatedAt" AS "Ticket__Ticket_ticketStub_generatedAt" FROM "tickets" "Ticket" LEFT JOIN "activities" "Ticket__Ticket_activity" ON "Ticket__Ticket_activity"."id"="Ticket"."activityId"  LEFT JOIN "ticket_stubs" "Ticket__Ticket_ticketStub" ON "Ticket__Ticket_ticketStub"."ticketId"="Ticket"."id" WHERE (("Ticket"."userId" = 2))
+query: SELECT "User"."id" AS "User_id", "User"."nickname" AS "User_nickname", "User"."avatarUrl" AS "User_avatarUrl", "User"."name" AS "User_name", "User"."studentId" AS "User_studentId", "User"."college" AS "User_college", "User"."className" AS "User_className", "User"."phone" AS "User_phone", "User"."passwordHash" AS "User_passwordHash", "User"."openid" AS "User_openid", "User"."profileCompleted" AS "User_profileCompleted", "User"."createdAt" AS "User_createdAt", "User"."updatedAt" AS "User_updatedAt" FROM "users" "User" WHERE (("User"."id" = 2)) LIMIT 1
+query: SELECT "Ticket"."id" AS "Ticket_id", "Ticket"."activityId" AS "Ticket_activityId", "Ticket"."userId" AS "Ticket_userId", "Ticket"."ticketNumber" AS "Ticket_ticketNumber", "Ticket"."seatNumber" AS "Ticket_seatNumber", "Ticket"."status" AS "Ticket_status", "Ticket"."createdAt" AS "Ticket_createdAt", "Ticket__Ticket_activity"."id" AS "Ticket__Ticket_activity_id", "Ticket__Ticket_activity"."title" AS "Ticket__Ticket_activity_title", "Ticket__Ticket_activity"."description" AS "Ticket__Ticket_activity_description", "Ticket__Ticket_activity"."location" AS "Ticket__Ticket_activity_location", "Ticket__Ticket_activity"."coverImageUrl" AS "Ticket__Ticket_activity_coverImageUrl", "Ticket__Ticket_activity"."galleryImageUrl" AS "Ticket__Ticket_activity_galleryImageUrl", "Ticket__Ticket_activity"."ticketStubImageUrl" AS "Ticket__Ticket_activity_ticketStubImageUrl", "Ticket__Ticket_activity"."ticketStubSlogan" AS "Ticket__Ticket_activity_ticketStubSlogan", "Ticket__Ticket_activity"."ticketNumberPrefix" AS "Ticket__Ticket_activity_ticketNumberPrefix", "Ticket__Ticket_activity"."seatRule" AS "Ticket__Ticket_activity_seatRule", "Ticket__Ticket_activity"."registrationFields" AS "Ticket__Ticket_activity_registrationFields", "Ticket__Ticket_activity"."adminAccountId" AS "Ticket__Ticket_activity_adminAccountId", "Ticket__Ticket_activity"."adminUserId" AS "Ticket__Ticket_activity_adminUserId", "Ticket__Ticket_activity"."totalTickets" AS "Ticket__Ticket_activity_totalTickets", "Ticket__Ticket_activity"."availableTickets" AS "Ticket__Ticket_activity_availableTickets", "Ticket__Ticket_activity"."startTime" AS "Ticket__Ticket_activity_startTime", "Ticket__Ticket_activity"."endTime" AS "Ticket__Ticket_activity_endTime", "Ticket__Ticket_activity"."status" AS "Ticket__Ticket_activity_status", "Ticket__Ticket_activity"."qrCodeUrl" AS "Ticket__Ticket_activity_qrCodeUrl", "Ticket__Ticket_activity"."createdAt" AS "Ticket__Ticket_activity_createdAt", "Ticket__Ticket_activity"."updatedAt" AS "Ticket__Ticket_activity_updatedAt", "Ticket__Ticket_ticketStub"."id" AS "Ticket__Ticket_ticketStub_id", "Ticket__Ticket_ticketStub"."ticketId" AS "Ticket__Ticket_ticketStub_ticketId", "Ticket__Ticket_ticketStub"."qrCodeUrl" AS "Ticket__Ticket_ticketStub_qrCodeUrl", "Ticket__Ticket_ticketStub"."generatedAt" AS "Ticket__Ticket_ticketStub_generatedAt" FROM "tickets" "Ticket" LEFT JOIN "activities" "Ticket__Ticket_activity" ON "Ticket__Ticket_activity"."id"="Ticket"."activityId"  LEFT JOIN "ticket_stubs" "Ticket__Ticket_ticketStub" ON "Ticket__Ticket_ticketStub"."ticketId"="Ticket"."id" WHERE (("Ticket"."userId" = 2))
+[2J[3J[H[[90m13:13:12[0m] File change detected. Starting incremental compilation...
+
+[[90m13:13:14[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m13:13:15[0m] File change detected. Starting incremental compilation...
+
+[[90m13:13:17[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +45ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +1ms[39m
+query: PRAGMA foreign_keys = OFF
+query: BEGIN TRANSACTION
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'index' AND "tbl_name" IN ('users','ticket_stubs','tickets','activities','admin_activity_drafts','admin_accounts')
+query: PRAGMA table_xinfo("ticket_stubs")
+query: PRAGMA index_list("ticket_stubs")
+query: PRAGMA foreign_key_list("ticket_stubs")
+query: PRAGMA table_xinfo("tickets")
+query: PRAGMA index_list("tickets")
+query: PRAGMA foreign_key_list("tickets")
+query: PRAGMA table_xinfo("users")
+query: PRAGMA index_list("users")
+query: PRAGMA foreign_key_list("users")
+query: PRAGMA table_xinfo("activities")
+query: PRAGMA index_list("activities")
+query: PRAGMA foreign_key_list("activities")
+query: PRAGMA table_xinfo("admin_accounts")
+query: PRAGMA index_list("admin_accounts")
+query: PRAGMA foreign_key_list("admin_accounts")
+query: PRAGMA table_xinfo("admin_activity_drafts")
+query: PRAGMA index_list("admin_activity_drafts")
+query: PRAGMA foreign_key_list("admin_activity_drafts")
+query: PRAGMA index_info("sqlite_autoindex_ticket_stubs_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_3")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_accounts_1")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_2")
+query: PRAGMA index_info("sqlite_autoindex_admin_activity_drafts_1")
+query: PRAGMA index_info("sqlite_autoindex_users_2")
+query: PRAGMA index_info("sqlite_autoindex_users_1")
+query: PRAGMA index_info("sqlite_autoindex_tickets_1")
+query: SELECT * FROM "sqlite_master" WHERE "type" = 'table' AND "name" = 'typeorm_metadata'
+query: COMMIT
+query: PRAGMA foreign_keys = ON
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +65ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAdminModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mActivitiesModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUsersModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTicketsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +5ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +4ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mActivitiesController {/activities}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, PATCH} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/activities/:id/tickets, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAdminController {/admin}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/draft, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mTicketsController {/tickets}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/book/async, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/by-number/:ticketNumber, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/tickets/user/:userId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUsersController {/users}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/register, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/profile/:id, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/student/:studentId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/phone/:phone, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/users/:id, PATCH} route[39m[38;5;3m +1ms[39m
+query: SELECT "AdminAccount"."id" AS "AdminAccount_id", "AdminAccount"."account" AS "AdminAccount_account", "AdminAccount"."displayName" AS "AdminAccount_displayName", "AdminAccount"."adminAccountId" AS "AdminAccount_adminAccountId", "AdminAccount"."adminUserId" AS "AdminAccount_adminUserId", "AdminAccount"."passwordHash" AS "AdminAccount_passwordHash", "AdminAccount"."createdAt" AS "AdminAccount_createdAt", "AdminAccount"."updatedAt" AS "AdminAccount_updatedAt" FROM "admin_accounts" "AdminAccount" WHERE (("AdminAccount"."account" = ?)) LIMIT 1 -- PARAMETERS: ["ADMIN2024"]
+[32m[Nest] 28184  - [39m2026/05/01 13:13:19 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +16ms[39m
+[2J[3J[H[[90m13:14:45[0m] File change detected. Starting incremental compilation...
+
+[[90m13:14:45[0m] Found 0 errors. Watching for file changes.
+
