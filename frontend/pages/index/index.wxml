@@ -1,51 +1,74 @@
 <view class="container">
-  <!-- 轮播图 -->
   <view class="swiper-container">
-    <swiper autoplay="true" interval="3000" duration="500" circular="true" indicator-dots="true" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#fff">
-      <swiper-item wx:for="{{banners}}" wx:key="index">
+    <swiper
+      wx:if="{{banners.length}}"
+      autoplay="true"
+      interval="3000"
+      duration="500"
+      circular="true"
+      indicator-dots="true"
+      indicator-color="rgba(255,255,255,0.5)"
+      indicator-active-color="#fff"
+    >
+      <swiper-item wx:for="{{banners}}" wx:key="id">
         <image src="{{item.image}}" mode="aspectFill" class="swiper-image"></image>
-        <view class="swiper-title">{{item.title}}</view>
+        <view class="swiper-title">
+          <text class="banner-title">{{item.title}}</text>
+          <text class="banner-subtitle">{{item.subtitle}}</text>
+        </view>
       </swiper-item>
     </swiper>
+
+    <view wx:else class="banner-empty">
+      <text>暂无活动轮播</text>
+    </view>
   </view>
 
-  <!-- 热门活动 -->
   <view class="section">
     <view class="section-title">
       <text class="title-text">热门活动</text>
       <text class="more-text" bindtap="goToMoreActivities">更多 ></text>
     </view>
-    <view class="activity-list">
+
+    <view class="activity-list" wx:if="{{hotActivities.length}}">
       <view wx:for="{{hotActivities}}" wx:key="id" class="activity-card fade-in" bindtap="goToActivity" data-id="{{item.id}}">
-        <image src="{{item.image}}" mode="aspectFill" class="activity-image"></image>
+        <image src="{{item.coverImageUrl}}" mode="aspectFill" class="activity-image"></image>
         <view class="activity-content">
           <view class="activity-title">{{item.title}}</view>
           <view class="activity-info">
             <text class="time">{{item.startTime}}</text>
-            <text class="location">地点: {{item.location}}</text>
+            <text class="location">地点：{{item.location}}</text>
           </view>
           <view class="ticket-info">
-            <text class="ticket-count">剩余票数: {{item.availableTickets}}</text>
-            <text class="status">{{item.status === 'active' ? '抢票中' : '已结束'}}</text>
+            <text class="ticket-count">剩余票数：{{item.availableTickets}}</text>
+            <text class="status {{item.statusClass}}">{{item.statusLabel}}</text>
           </view>
         </view>
       </view>
     </view>
+
+    <view wx:else class="empty-state">
+      <text>暂无活动数据，请稍后再来</text>
+    </view>
   </view>
 
-  <!-- 最新公告 -->
   <view class="section">
     <view class="section-title">
       <text class="title-text">最新公告</text>
     </view>
-    <view class="announcement-list">
+
+    <view class="announcement-list" wx:if="{{announcements.length}}">
       <view wx:for="{{announcements}}" wx:key="id" class="announcement-item fade-in" bindtap="onAnnouncementTap" data-id="{{item.id}}">
         <view class="announcement-content">
           <text class="announcement-title">{{item.title}}</text>
           <text class="announcement-date">{{item.date}}</text>
         </view>
-        <text class="arrow">></text>
+        <text class="arrow">&gt;</text>
       </view>
+    </view>
+
+    <view wx:else class="empty-state">
+      <text>暂无公告</text>
     </view>
   </view>
 </view>

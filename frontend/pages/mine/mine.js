@@ -1,4 +1,8 @@
-const { getApiUrl, getCurrentUser, normalizeUser, setCurrentUser } = require('../../utils/user');
+const { getApiUrl } = require('../../utils/api');
+const { getCurrentUser, normalizeUser, setCurrentUser } = require('../../utils/user');
+const { requestJson } = require('../../utils/request');
+const { DEFAULT_TICKET_LOCATION, formatDateTime, normalizeTicket } = require('../../utils/activity');
+const { clearCurrentRole } = require('../../utils/role');
 
 Page({
   data: {
@@ -13,130 +17,131 @@ Page({
     },
     tickets: [],
     isLoadingUser: false,
-    useMockData: false,
   },
 
   onLoad() {
-    this.refreshUserProfile();
-    this.getTickets();
+    this.loadPage();
   },
 
   onShow() {
-    this.refreshUserProfile();
-    this.getTickets();
+    this.loadPage();
   },
 
-  refreshUserProfile() {
+  redirectToLogin() {
+    wx.reLaunch({
+      url: '/pages/login/login',
+    });
+  },
+
+  redirectToSelect() {
+    wx.reLaunch({
+      url: '/pages/launch/launch',
+    });
+  },
+
+  redirectToProfile() {
+    wx.reLaunch({
+      url: '/pages/register/register?mode=complete',
+    });
+  },
+
+  async loadPage() {
+    if (this.loadingPage) {
+      return;
+    }
+
+    this.loadingPage = true;
     const currentUser = getCurrentUser();
 
     if (!currentUser) {
-      wx.redirectTo({
-        url: '/pages/register/register',
-      });
+      this.redirectToLogin();
+      this.loadingPage = false;
+      return;
+    }
+
+    const normalizedUser = setCurrentUser(normalizeUser(currentUser));
+    if (!normalizedUser.profileCompleted) {
+      this.redirectToProfile();
+      this.loadingPage = false;
       return;
     }
 
     this.setData({
-      userInfo: normalizeUser(currentUser),
+      userInfo: normalizedUser,
       isLoadingUser: true,
     });
 
-    wx.request({
-      url: getApiUrl(`/users/profile/${currentUser.id}`),
-      method: 'GET',
-      timeout: 5000,
-      success: (res) => {
-        if (res.statusCode === 200 && res.data) {
-          const user = setCurrentUser(res.data);
-          this.setData({
-            userInfo: user,
-          });
+    try {
+      const profileResponse = await requestJson({
+        url: getApiUrl(`/users/profile/${normalizedUser.id}`),
+        method: 'GET',
+      });
+
+      if (profileResponse.statusCode === 200 && profileResponse.data) {
+        const user = setCurrentUser(normalizeUser(profileResponse.data));
+        this.setData({
+          userInfo: user,
+        });
+
+        if (!user.profileCompleted) {
+          this.redirectToProfile();
+          return;
         }
-      },
-      fail: () => {
-        this.setData({
-          userInfo: normalizeUser(currentUser),
-        });
-      },
-      complete: () => {
-        this.setData({
-          isLoadingUser: false,
-        });
-      },
-    });
+      }
+    } catch (error) {
+      this.setData({
+        userInfo: normalizedUser,
+      });
+    } finally {
+      this.setData({
+        isLoadingUser: false,
+      });
+      this.loadingPage = false;
+    }
+
+    await this.loadTickets();
   },
 
-  getTickets() {
+  async loadTickets() {
     const currentUser = getCurrentUser();
 
-    if (!currentUser || !currentUser.id) {
+    if (!currentUser || !currentUser.id || !currentUser.profileCompleted) {
       this.setData({ tickets: [] });
       return;
     }
 
-    wx.request({
-      url: getApiUrl(`/tickets/user/${currentUser.id}`),
-      method: 'GET',
-      timeout: 5000,
-      success: (res) => {
-        if (res.statusCode === 200 && Array.isArray(res.data)) {
-          this.setData({
-            tickets: this.formatTickets(res.data),
-            useMockData: false,
-          });
-          return;
-        }
+    try {
+      const response = await requestJson({
+        url: getApiUrl(`/tickets/user/${currentUser.id}`),
+        method: 'GET',
+      });
 
-        this.useMockTickets();
-      },
-      fail: () => {
-        this.useMockTickets();
-      },
-    });
+      if (response.statusCode === 200 && Array.isArray(response.data)) {
+        this.setData({
+          tickets: response.data.map((ticket) => this.formatTicket(normalizeTicket(ticket))),
+        });
+        return;
+      }
+
+      this.setData({ tickets: [] });
+    } catch (error) {
+      this.setData({ tickets: [] });
+    }
   },
 
-  formatTickets(tickets) {
-    return tickets.map((ticket) => ({
+  formatTicket(ticket) {
+    return {
       id: ticket.id,
-      activityTitle: ticket.activity ? ticket.activity.title : '活动',
-      time: this.formatDate(ticket.activity ? ticket.activity.startTime : ''),
-      location: '体育馆',
+      activityTitle: ticket.activity.title || '活动',
+      time: ticket.activity.startTime || '',
+      location: ticket.activity.location || DEFAULT_TICKET_LOCATION,
       seatNumber: ticket.seatNumber,
       ticketNumber: ticket.ticketNumber,
-      qrCode: ticket.ticketStub ? ticket.ticketStub.qrCodeUrl : '',
+      qrCode: ticket.ticketStub.qrCodeUrl || '',
       status: ticket.status,
-    }));
-  },
-
-  formatDate(dateStr) {
-    if (!dateStr) return '';
-    const date = new Date(dateStr.replace(/-/g, '/'));
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-  },
-
-  useMockTickets() {
-    const mockTickets = [
-      {
-        id: 1,
-        activityTitle: '2026春季运动会',
-        time: '2026-04-20 09:00',
-        location: '体育馆',
-        seatNumber: 'A区12排4座',
-        ticketNumber: 'T20260420001',
-        qrCode: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=QR%20code%20ticket%20validation%20scan%20black%20and%20white%20high%20contrast%20square%20pattern&image_size=square',
-        status: 'valid',
-      },
-    ];
-
-    this.setData({
-      tickets: mockTickets,
-      useMockData: true,
-    });
+      coverImageUrl: ticket.activity.coverImageUrl || '',
+      endTime: formatDateTime(ticket.activity.rawEndTime || ticket.activity.endTime || ''),
+    };
   },
 
   onEditProfile() {
@@ -147,16 +152,24 @@ Page({
 
   onViewAllTickets() {
     wx.showToast({
-      title: '已展示当前登录用户的票根',
+      title: '当前只展示该用户的票根',
       icon: 'none',
     });
   },
 
   onGoToAdmin() {
-    wx.showToast({
-      title: '暂未开放管理员入口',
-      icon: 'none',
-    });
+    this.redirectToSelect();
+  },
+
+  onLogout() {
+    clearCurrentRole();
+    wx.removeStorageSync('current_user');
+    const app = typeof getApp === 'function' ? getApp() : null;
+    if (app && app.globalData) {
+      app.globalData.currentUser = null;
+      app.globalData.currentRole = '';
+    }
+    this.redirectToSelect();
   },
 
   onTicketTap(e) {

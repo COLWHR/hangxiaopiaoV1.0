@@ -1,8 +1,8 @@
 <view class="page">
   <view class="hero">
     <text class="eyebrow">航小票</text>
-    <text class="title">{{isEditing ? '完善个人信息' : '首次登录'}}</text>
-    <text class="subtitle">登录后补全个人信息，资料会同步到数据库和“我的”页面。</text>
+    <text class="title">{{pageTitle}}</text>
+    <text class="subtitle">{{pageSubtitle}}</text>
   </view>
 
   <view class="card">
@@ -29,7 +29,7 @@
       <input
         class="form-input"
         type="number"
-        placeholder="请输入 8-12 位学号"
+        placeholder="请输入 12 位学号"
         value="{{formData.studentId}}"
         maxlength="12"
         bindinput="onStudentIdInput"
@@ -61,7 +61,7 @@
       <input
         class="form-input"
         type="text"
-        placeholder="请输入班级，例如 2023 级 1 班"
+        placeholder="例如 XX2001"
         value="{{formData.className}}"
         maxlength="30"
         bindinput="onClassNameInput"
@@ -71,15 +71,15 @@
     <view class="form-item">
       <view class="form-label">
         <text class="required">*</text>
-        <text>手机号</text>
+        <text>手机号码</text>
       </view>
       <input
         class="form-input"
         type="number"
-        placeholder="请输入 11 位手机号"
+        placeholder="登录手机号"
         value="{{formData.phone}}"
         maxlength="11"
-        bindinput="onPhoneInput"
+        disabled="{{phoneLocked}}"
       />
     </view>
 
@@ -88,11 +88,11 @@
     </view>
 
     <button class="submit-button" bindtap="onRegister" disabled="{{isSubmitting}}">
-      {{isSubmitting ? '保存中...' : '保存并进入“我的”'}}
+      {{isSubmitting ? '保存中...' : '保存并继续'}}
     </button>
 
     <view class="tip">
-      <text>提交后会自动创建或更新用户记录。</text>
+      <text>提交后会同步到数据库和“我的”页面。</text>
     </view>
   </view>
 </view>

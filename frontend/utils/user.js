@@ -1,25 +1,26 @@
+const { getApiUrl } = require('./api');
 const STORAGE_KEY = 'current_user';
-const API_BASE_URL = 'http://localhost:3000';
 const DEFAULT_AVATAR_URL =
   'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=campus%20student%20portrait%20friendly%20smile%20clean%20blue%20background%20professional%20avatar&image_size=square';
 
 function normalizeUser(user = {}) {
-  const name = (user.name || '').trim();
-  const studentId = (user.studentId || '').trim();
-  const nickname = (user.nickname || '').trim() || name || studentId || '航小票用户';
-  const college = (user.college || '').trim();
-  const className = (user.className || '').trim();
-  const phone = (user.phone || '').trim();
+  const { passwordHash, ...safeUser } = user;
+  const name = (safeUser.name || '').trim();
+  const studentId = (safeUser.studentId || '').trim();
+  const nickname = (safeUser.nickname || '').trim() || name || studentId || '航小票用户';
+  const college = (safeUser.college || '').trim();
+  const className = (safeUser.className || '').trim();
+  const phone = (safeUser.phone || '').trim();
 
   return {
-    ...user,
+    ...safeUser,
     name,
     studentId,
     nickname,
     college,
     className,
     phone,
-    avatarUrl: (user.avatarUrl || '').trim() || DEFAULT_AVATAR_URL,
+    avatarUrl: (safeUser.avatarUrl || '').trim() || DEFAULT_AVATAR_URL,
     profileCompleted: Boolean(name && studentId && college && className && phone),
   };
 }
@@ -60,12 +61,7 @@ function clearCurrentUser() {
   }
 }
 
-function getApiUrl(path) {
-  return `${API_BASE_URL}${path}`;
-}
-
 module.exports = {
-  API_BASE_URL,
   DEFAULT_AVATAR_URL,
   STORAGE_KEY,
   clearCurrentUser,
