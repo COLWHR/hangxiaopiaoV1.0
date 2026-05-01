@@ -121,7 +121,7 @@ Page({
       });
     } catch (error) {
       this.setData({
-        formError: '网络请求失败，请检查后端服务是否启动',
+        formError: '网络请求失败，请检查后端服务是否已启动',
       });
     } finally {
       wx.hideLoading();

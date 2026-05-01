@@ -169,7 +169,9 @@ export class AdminService implements OnModuleInit {
     return {
       success: true,
       data:
-        draft && draft.draftData && (!draft.lastClearedAt || this.getDraftTimestamp(draft.draftData) > this.getDateTimestamp(draft.lastClearedAt))
+        draft &&
+        draft.draftData &&
+        (!draft.lastClearedAt || this.getDraftTimestamp(draft.draftData) > this.getDateTimestamp(draft.lastClearedAt))
           ? draft.draftData
           : null,
     };

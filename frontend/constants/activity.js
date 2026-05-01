@@ -25,7 +25,7 @@ const STATUS_META = {
 };
 
 const REGISTRATION_FIELD_OPTIONS = [
-  { key: 'name', label: '姓名', required: true, locked: true, description: '实名签到与票根校验' },
+  { key: 'name', label: '姓名', required: true, locked: true, description: '用于实名签到和票根校验' },
   { key: 'studentId', label: '学号', required: true, locked: true, description: '与用户端注册主键对齐' },
   { key: 'college', label: '学院', required: true, locked: false, description: '用于学院活动筛选与统计' },
   { key: 'className', label: '班级', required: true, locked: false, description: '用于班级维度筛选与导出' },

@@ -102,9 +102,12 @@ Page({
   onChooseImage(event) {
     const field = event.currentTarget.dataset.field;
     const presets = {
-      coverImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=campus%20event%20cover%20poster%20clean%20blue%20theme&image_size=landscape_16_9',
-      galleryImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=event%20demo%20image%20students%20campus%20activity%20blue%20tone&image_size=landscape_16_9',
-      ticketStubImage: 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ticket%20stub%20design%20college%20event%20clean%20blue&image_size=landscape_4_3',
+      coverImage:
+        'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=campus%20event%20cover%20poster%20clean%20blue%20theme&image_size=landscape_16_9',
+      galleryImage:
+        'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=event%20demo%20image%20students%20campus%20activity%20blue%20tone&image_size=landscape_16_9',
+      ticketStubImage:
+        'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ticket%20stub%20design%20college%20event%20clean%20blue&image_size=landscape_4_3',
     };
     this.updateDraftField(field, presets[field]);
     wx.showToast({

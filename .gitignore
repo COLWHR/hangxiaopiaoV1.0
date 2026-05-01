@@ -23,11 +23,13 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+backend/.codex-logs/
 
 # 临时文件
 *.tmp
 *.temp
 .cache/
+backend/database.db
 
 # 微信开发者工具
 project.config.json

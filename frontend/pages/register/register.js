@@ -190,7 +190,7 @@ Page({
           });
         } else {
           this.setData({
-            formError: '资料未完整，请继续补全',
+            formError: '资料未完整，请继续补充',
           });
         }
         return;
@@ -201,7 +201,7 @@ Page({
       });
     } catch (error) {
       this.setData({
-        formError: '网络请求失败，请检查后端服务是否启动',
+        formError: '网络请求失败，请检查后端服务是否已启动',
       });
     } finally {
       wx.hideLoading();

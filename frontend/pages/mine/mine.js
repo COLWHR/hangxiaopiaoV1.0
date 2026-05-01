@@ -152,7 +152,7 @@ Page({
 
   onViewAllTickets() {
     wx.showToast({
-      title: '当前只展示该用户的票根',
+      title: '当前仅展示该用户的票根',
       icon: 'none',
     });
   },

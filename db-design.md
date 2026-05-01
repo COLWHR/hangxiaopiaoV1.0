@@ -1,112 +1,75 @@
-# 数据库设计
+# 数据库现状与规范化清单
 
-## 1. 表结构
+## 当前现状
+当前后端使用 SQLite，核心表如下：
+- `activities`
+- `users`
+- `tickets`
+- `ticket_stubs`
+- `admin_accounts`
+- `admin_activity_drafts`
 
-### 1.1 活动表（activities）
+当前实现的特点：
+- 通过 TypeORM `synchronize: true` 自动建表
+- 已存在基础唯一约束，如 `users.phone`、`users.studentId`、`tickets.ticketNumber`
+- `tickets` 与 `users`、`activities` 已建立外键关系
+- 管理员账号与草稿能力已经独立建模
 
-| 字段名 | 数据类型 | 约束 | 描述 |
-| :--- | :--- | :--- | :--- |
-| `id` | `SERIAL` | `PRIMARY KEY` | 活动ID |
-| `title` | `VARCHAR(255)` | `NOT NULL` | 活动标题 |
-| `description` | `TEXT` | `NOT NULL` | 活动描述 |
-| `total_tickets` | `INTEGER` | `NOT NULL` | 总票数 |
-| `available_tickets` | `INTEGER` | `NOT NULL` | 剩余票数 |
-| `start_time` | `TIMESTAMP` | `NOT NULL` | 抢票开始时间 |
-| `end_time` | `TIMESTAMP` | `NOT NULL` | 抢票结束时间 |
-| `status` | `VARCHAR(20)` | `NOT NULL DEFAULT 'pending'` | 活动状态（pending, active, ended, cancelled） |
-| `qr_code_url` | `VARCHAR(255)` | | 活动二维码URL |
-| `created_at` | `TIMESTAMP` | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
-| `updated_at` | `TIMESTAMP` | `DEFAULT CURRENT_TIMESTAMP` | 更新时间 |
+## 已确认的问题
+### 1. 命名风格不统一
+- 代码层大量使用 camelCase 字段，如 `availableTickets`
+- 文档历史版本混杂 snake_case 设计，如 `available_tickets`
+- 后续如果切到 PostgreSQL 或写迁移脚本，命名差异会放大维护成本
 
-### 1.2 用户表（users）
+### 2. `availableTickets` 属于衍生字段
+- 它本质上可以由 `totalTickets - 已出票数` 推导
+- 当前保留该字段可以提升读性能，但需要严格保证更新一致性
+- 目前主要依赖业务代码在抢票事务里手动扣减
 
-| 字段名 | 数据类型 | 约束 | 描述 |
-| :--- | :--- | :--- | :--- |
-| `id` | `SERIAL` | `PRIMARY KEY` | 用户ID |
-| `openid` | `VARCHAR(255)` | `UNIQUE NOT NULL` | 微信小程序openid |
-| `nickname` | `VARCHAR(255)` | | 用户昵称 |
-| `avatar_url` | `VARCHAR(512)` | | 用户头像URL |
-| `student_id` | `VARCHAR(50)` | | 学生证号 |
-| `name` | `VARCHAR(100)` | | 真实姓名 |
-| `created_at` | `TIMESTAMP` | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
-| `updated_at` | `TIMESTAMP` | `DEFAULT CURRENT_TIMESTAMP` | 更新时间 |
+### 3. 时间字段类型不完全一致
+- `activities.createdAt` / `updatedAt` 使用 `datetime`
+- `users.createdAt` / `updatedAt`、`tickets.createdAt`、`admin_accounts.createdAt` 等部分字段使用 `date`
+- 这会让排序、审计和跨表对账变得不稳定
 
-### 1.3 门票表（tickets）
+### 4. 约束仍然偏弱
+- `activities` 没有限制 `totalTickets >= 0`
+- `availableTickets` 没有限制不能大于 `totalTickets`
+- `status` 字段仍是普通字符串，没有枚举或检查约束
+- `admin_activity_drafts` 依赖单字段唯一约束，语义上更适合联合唯一键
 
-| 字段名 | 数据类型 | 约束 | 描述 |
-| :--- | :--- | :--- | :--- |
-| `id` | `SERIAL` | `PRIMARY KEY` | 门票ID |
-| `activity_id` | `INTEGER` | `REFERENCES activities(id)` | 活动ID |
-| `user_id` | `INTEGER` | `REFERENCES users(id)` | 用户ID |
-| `ticket_number` | `VARCHAR(50)` | `UNIQUE NOT NULL` | 门票编号 |
-| `seat_number` | `VARCHAR(50)` | `NOT NULL` | 座位号 |
-| `status` | `VARCHAR(20)` | `NOT NULL DEFAULT 'valid'` | 门票状态（valid, used, invalid） |
-| `created_at` | `TIMESTAMP` | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
+### 5. 迁移策略缺失
+- 当前依赖 `synchronize: true`
+- 适合开发联调，不适合后续持续演进
+- 一旦数据库中已有真实数据，自动同步可能带来不可控风险
 
-### 1.4 票根表（ticket_stubs）
+## 建议的规范化方向
+### 第一阶段：低风险整理
+- 保持现有表名不变，先统一字段命名策略，明确后续继续使用 camelCase 还是切换 snake_case
+- 把所有审计时间字段统一到 `datetime` 或等价的完整时间类型
+- 补充关键索引：
+  - `activities(status, startTime)`
+  - `activities(adminAccountId, createdAt)`
+  - `tickets(userId, createdAt)`
+  - `tickets(activityId, userId)`
+- 为活动状态、票据状态补充枚举常量，并在服务层统一校验入口
 
-| 字段名 | 数据类型 | 约束 | 描述 |
-| :--- | :--- | :--- | :--- |
-| `id` | `SERIAL` | `PRIMARY KEY` | 票根ID |
-| `ticket_id` | `INTEGER` | `REFERENCES tickets(id)` | 门票ID |
-| `qr_code_url` | `VARCHAR(255)` | `NOT NULL` | 票根二维码URL |
-| `generated_at` | `TIMESTAMP` | `DEFAULT CURRENT_TIMESTAMP` | 生成时间 |
+### 第二阶段：约束增强
+- 为票数相关字段增加检查约束
+- 明确 `admin_activity_drafts` 是否应改为 `(adminAccountId, adminUserId)` 联合唯一
+- 明确 `ticket_stubs.ticketId` 的一对一关系是否还需要额外索引或唯一声明
 
-## 2. 索引设计
+### 第三阶段：迁移治理
+- 从 `synchronize: true` 迁移到正式 migration
+- 先冻结现有 schema，再生成第一版基线迁移
+- 所有后续表结构调整都通过 migration 执行
 
-### 2.1 活动表索引
-- `idx_activities_status` - 活动状态索引
-- `idx_activities_start_time` - 开始时间索引
-- `idx_activities_end_time` - 结束时间索引
+## 推荐落地顺序
+1. 先冻结命名规范和字段语义
+2. 再统一时间字段类型
+3. 然后补索引和约束
+4. 最后引入 migration，替代 `synchronize: true`
 
-### 2.2 用户表索引
-- `idx_users_openid` - openid唯一索引
-- `idx_users_student_id` - 学生证号索引
-
-### 2.3 门票表索引
-- `idx_tickets_activity_id` - 活动ID索引
-- `idx_tickets_user_id` - 用户ID索引
-- `idx_tickets_ticket_number` - 门票编号唯一索引
-- `idx_tickets_status` - 门票状态索引
-
-## 3. 关系图
-
-```
-┌─────────────┐     ┌─────────────┐
-│   users     │◄────┤   tickets   │
-└─────────────┘     └─────────────┘
-                        ▲
-                        │
-┌─────────────┐     ┌─────────────┐
-│ activities  │────►│ticket_stubs │
-└─────────────┘     └─────────────┘
-```
-
-## 4. 数据一致性保障
-
-1. **事务控制**：使用 PostgreSQL 事务确保抢票操作的原子性
-2. **乐观锁**：在活动表中使用版本号字段，防止并发更新冲突
-3. **唯一约束**：确保门票编号的唯一性
-4. **外键约束**：维护表之间的关系完整性
-5. **触发器**：当抢票成功时，自动更新活动表中的剩余票数
-
-## 5. 并发处理策略
-
-1. **数据库层面**：
-   - 使用 `SELECT FOR UPDATE` 锁定活动记录
-   - 使用事务确保数据一致性
-
-2. **应用层面**：
-   - 使用 Redis 缓存活动剩余票数
-   - 使用 Redis 分布式锁防止重复抢票
-   - 使用消息队列异步处理抢票请求
-
-3. **索引优化**：
-   - 为频繁查询的字段创建索引
-   - 优化 SQL 查询语句
-
-## 6. 数据备份与恢复
-
-- 定期备份数据库
-- 制定灾难恢复计划
-- 测试数据恢复流程
+## 本轮不建议立即做的事
+- 不建议现在直接重命名全部表和字段
+- 不建议在联调阶段切换到 PostgreSQL
+- 不建议在没有迁移基线的情况下直接手工修改线上式数据库文件

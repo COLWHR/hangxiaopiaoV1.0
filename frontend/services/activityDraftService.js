@@ -259,15 +259,13 @@ function normalizeDraft(draft, options = {}) {
   const originTotalTickets = toSafeNumber(draft.originTotalTickets);
   const originAvailableTickets = toSafeNumber(draft.originAvailableTickets);
   const soldTickets = Math.max(originTotalTickets - originAvailableTickets, 0);
-  const availableTickets = draft.id
-    ? Math.max(totalTickets - soldTickets, 0)
-    : totalTickets;
+  const availableTickets = draft.id ? Math.max(totalTickets - soldTickets, 0) : totalTickets;
   return {
     ...draft,
     totalTickets,
     availableTickets,
-    originTotalTickets: draft.id ? (originTotalTickets || totalTickets) : totalTickets,
-    originAvailableTickets: draft.id ? (originAvailableTickets || availableTickets) : totalTickets,
+    originTotalTickets: draft.id ? originTotalTickets || totalTickets : totalTickets,
+    originAvailableTickets: draft.id ? originAvailableTickets || availableTickets : totalTickets,
     status: draft.status || ACTIVITY_STATUS.DRAFT,
     updatedAt: shouldTouchUpdatedAt ? new Date().toISOString() : draft.updatedAt || new Date().toISOString(),
   };
@@ -296,7 +294,7 @@ function validateDraft(draft) {
     return '请填写活动地点。';
   }
   if (!draft.startTime || !draft.endTime) {
-    return '请完整选择活动时间。';
+    return '请选择完整的活动时间。';
   }
   if (new Date(draft.startTime.replace(/-/g, '/')) >= new Date(draft.endTime.replace(/-/g, '/'))) {
     return '活动结束时间必须晚于开始时间。';
@@ -305,13 +303,13 @@ function validateDraft(draft) {
     return '总票数必须是大于 0 的整数。';
   }
   if (!draft.coverImage) {
-    return '请上传活动封图。';
+    return '请上传活动封面。';
   }
   if (!draft.ticketStubImage) {
     return '请配置票根图片。';
   }
   if (!draft.ticketStubSlogan || draft.ticketStubSlogan.trim().length < 4) {
-    return '请填写票根语，建议不少于 4 个字。';
+    return '请填写票根标语，建议不少于 4 个字。';
   }
   if (!draft.ticketNumberPrefix || draft.ticketNumberPrefix.trim().length < 2) {
     return '请填写票根编号前缀。';
